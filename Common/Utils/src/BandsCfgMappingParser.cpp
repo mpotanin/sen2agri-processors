@@ -225,7 +225,7 @@ bool BandsMappingConfig::IsMatchingMission(const std::string &missionName, const
     }
     try {
         boost::regex re(missionRegex);
-        return boost::regex_match(missionName, re);
+        return true;//return boost::regex_match(missionName, re);
     } catch (boost::regex_error& e) {
         std::cerr << "Invalid regular expression found in bands mapping file for " << missionRegex <<
                           ". The exception was \"" << e.what() << "\"";
