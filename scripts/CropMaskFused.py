@@ -491,7 +491,7 @@ class CropMaskProcessor(ProcessorBase):
                      "-in", tile_smoothed,
                      "-inpos", tile_smoothed_spatial,
                      "-spatialr", self.args.spatialr,
-                     "-ranger", self.args.ranger,
+                     "-ranger", str(0.5*float(self.args.ranger)),
                      "-minsize", 0,
                      "-tilesizex", 1024,
                      "-tilesizey", 1024,
