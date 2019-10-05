@@ -101,7 +101,6 @@ void CropMaskTrainImagesClassifier::DoInit()
   SetParameterDescription("prodpertile", "The number of products corresponding to each tile");
   MandatoryOff("prodpertile");
 
-  AddParameter(ParameterType_StringList, "sp", "Temporal sampling rate");
 
   AddParameter(ParameterType_Choice, "mode", "Mode");
   SetParameterDescription("mode", "Specifies the choice of output dates (default: resample)");
@@ -171,6 +170,9 @@ void CropMaskTrainImagesClassifier::DoInit()
   AddParameter(ParameterType_Choice, "classifier", "Classifier to use for the training");
   SetParameterDescription("classifier", "Choice of the classifier to use for the training.");
 
+  AddParameter(ParameterType_StringList, "sp", "Temporal sampling rate");
+
+
   //Group LibSVM
 #ifdef OTB_USE_LIBSVM
   InitLibSVMParams();
@@ -211,6 +213,7 @@ void CropMaskTrainImagesClassifier::DoUpdateParameters()
 
 void CropMaskTrainImagesClassifier::DoExecute()
 {
+
   GetLogger()->Debug("Entering DoExecute\n");
 
   TemporalResamplingMode resamplingMode = TemporalResamplingMode::Resample;
@@ -222,10 +225,14 @@ void CropMaskTrainImagesClassifier::DoExecute()
   }
 
   std::vector<SensorPreferences> sp;
+
+
   if (HasValue("sp")) {
+	
       const auto &spValues = GetParameterStringList("sp");
       sp = parseSensorPreferences(spValues);
   }
+
 
   // Get the list of input files
   const std::vector<std::string> &descriptors = this->GetParameterStringList("il");
@@ -270,6 +277,7 @@ void CropMaskTrainImagesClassifier::DoExecute()
     }
 
 
+
   auto preprocessors = CropMaskPreprocessingList::New();
   auto bm = GetParameterEmpty("bm");
   auto window = GetParameterInt("window");
@@ -282,10 +290,12 @@ void CropMaskTrainImagesClassifier::DoExecute()
       endIndex = startIndex + sz;
       TileData td;
 
+
       auto preprocessor = CropMaskPreprocessing::New();
       preprocessors->PushBack(preprocessor);
       preprocessor->SetPixelSize(pixSize);
       preprocessor->SetMission(mission);
+
       if (GetParameterEmpty("rededge")) {
           preprocessor->SetIncludeRedEdge(true);
       }
@@ -296,6 +306,7 @@ void CropMaskTrainImagesClassifier::DoExecute()
       preprocessor->SetTSoil(0.2f);
 
       // compute the desired size of the processed rasters
+
       preprocessor->updateRequiredImageSize(descriptors, startIndex, endIndex, td);
       preprocessor->Build(descriptors.begin() + startIndex, descriptors.begin() + endIndex, td);
 
@@ -315,6 +326,9 @@ void CropMaskTrainImagesClassifier::DoExecute()
 
       images.emplace_back(output);
   }
+
+		//AAAA
+	std::cout<<"before CreateApplication"<<std::endl;
 
   auto app = otb::Wrapper::ApplicationRegistry::CreateApplication("TrainImagesClassifierNew");
   if (!app) {
@@ -439,6 +453,9 @@ void CropMaskTrainImagesClassifier::DoExecute()
   app->UpdateParameters();
 
   otbAppLogINFO("Training the classifier");
+
+		//AAAA
+	std::cout<<"Before Execution"<<std::endl;
   app->ExecuteAndWriteOutput();
   otbAppLogINFO("Training completed");
 }
