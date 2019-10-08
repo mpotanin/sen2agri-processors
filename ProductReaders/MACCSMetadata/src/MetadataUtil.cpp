@@ -27,11 +27,16 @@ std::string getRasterFile(const MACCSFileMetadata &metadata, const char *suffix)
 
     for (const auto &fileInfo : metadata.ProductOrganization.ImageFiles) {
         if (boost::algorithm::ends_with(fileInfo.LogicalName, suffix)) {
-            boost::filesystem::path p(metadata.ProductPath);
-            p.remove_filename();
-            p /= fileInfo.FileLocation;
-            p.replace_extension(".DBL.TIF");
-            file = p.string();
+            
+            file = metadata.ProductPath.substr(0,metadata.ProductPath.rfind("/"));
+            file = file + "/" + fileInfo.FileLocation;
+            file = file.substr(0,file.rfind(".")) + ".DBL.TIF";
+	
+            //boost::filesystem::path p(metadata.ProductPath);
+            //p.remove_filename();
+            //p /= fileInfo.FileLocation;
+            //p.replace_extension(".DBL.TIF");
+            //file = p.string();
             break;
         }
 
@@ -42,10 +47,12 @@ std::string getRasterFile(const MACCSFileMetadata &metadata, const char *suffix)
 
 std::string getRasterFile(const SPOT4Metadata &metadata, const std::string &file)
 {
-    boost::filesystem::path p(metadata.ProductPath);
-    p.remove_filename();
-    p /= file;
-    return p.string();
+    return (metadata.ProductPath.substr(0,metadata.ProductPath.rfind("/")) + "/" + file); 
+    //boost::filesystem::path p(metadata.ProductPath);
+    //p.remove_filename();
+    //p /= file;
+    //return p.string();
+  
 }
 
 std::string getMainRasterFile(const MACCSFileMetadata &metadata)
@@ -279,6 +286,18 @@ std::string ExtractDateFromDateTime(std::string dateTime) {
 */
 std::string GetLogicalFileName(std::string filePath, bool withExtension)
 {
+
+   if (withExtension) 
+      return filePath.substr(filePath.rfind("/")+1);
+   else
+   {
+      std::string strFilename = filePath.substr(filePath.rfind("/")+1);
+      if (std::string::npos!=strFilename.find("."))
+         return strFilename.substr(0,strFilename.rfind("."));
+      else
+         return strFilename;
+   }
+   /*
    // Create a Path object from File Path
    boost::filesystem::path pathObj(filePath);
 
@@ -298,5 +317,5 @@ std::string GetLogicalFileName(std::string filePath, bool withExtension)
        // return the file name with extension from path object
        return pathObj.filename().string();
    }
-
+   */
 }

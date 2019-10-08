@@ -121,6 +121,8 @@ std::cout<<"H1"<<std::endl;
 ///AAAAAA
 std::cout<<"H2"<<std::endl;
     if (this->m_metadata = majaMetadataReader->ReadMetadata(file)) {
+///AAAAAA
+std::cout<<"H2A"<<std::endl;
         if (this->m_metadata->Header.FixedHeader.Mission.find(SENTINEL_MISSION_STR) != std::string::npos &&
                 this->m_metadata->Header.FixedHeader.SourceSystem == "MUSCATE") {
 ///AAAAAA

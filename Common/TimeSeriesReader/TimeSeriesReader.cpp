@@ -106,22 +106,18 @@ void TimeSeriesReader::updateRequiredImageSize(const std::vector<std::string>& d
     // look for the first raster belonging to the main mission
     auto factory = MetadataHelperFactory::New();
 
-//AAAAA
-std::cout<<"B1"<<std::endl;
+
     for (int i = startIndex; i < endIndex; i++) {
         const std::string& desc = descriptors[i];
         std::unique_ptr<MetadataHelper<float, uint8_t>> pHelper = factory->GetMetadataHelper<float, uint8_t>(desc);
-//AAAAA
-std::cout<<"B2"<<std::endl;
+
         if (pHelper->GetMissionShortName() == m_mission) {
-//AAAAA
-std::cout<<"B3"<<std::endl;
+
             const std::vector<std::string> &firsResBandNames = pHelper->GetBandNamesForResolution(pHelper->GetProductResolutions()[0]);
             MetadataHelper<float, uint8_t>::VectorImageType::Pointer img = pHelper->GetImage(firsResBandNames);
             img->UpdateOutputInformation();
             float curRes = img->GetSpacing()[0];
-//AAAAA
-std::cout<<"B4"<<std::endl;
+
 
             const float scale = (float)m_pixSize / curRes;
             td.m_imageWidth = img->GetLargestPossibleRegion().GetSize()[0] / scale;
@@ -131,8 +127,7 @@ std::cout<<"B4"<<std::endl;
             ImageType::SpacingType spacing = img->GetSpacing();
             td.m_imageOrigin[0] = origin[0] + 0.5 * spacing[0] * (scale - 1.0);
             td.m_imageOrigin[1] = origin[1] + 0.5 * spacing[1] * (scale - 1.0);
-//AAAAA
-std::cout<<"B5"<<std::endl;
+
             td.m_projection = img->GetProjectionRef();
             break;
         }

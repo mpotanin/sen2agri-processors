@@ -231,33 +231,24 @@ std::vector<CommonFileInformation> ReadGeneralImageList(const TiXmlElement *el, 
 }
 
 std::vector<CommonFileInformation> ReadQuickLookFiles(const TiXmlElement *el) {
-//AAAAA
-std::cout<<"ReadQuickLookFiles-1"<<std::endl;
     std::vector<CommonFileInformation> result;
     if (!el) {
         return result;
     }
-//AAAAA
-std::cout<<"ReadQuickLookFiles-2"<<std::endl;
     CommonFileInformation quickLookFile;
     quickLookFile.BandNumber = -1;
     quickLookFile.BitNumber = -1;
     quickLookFile.Nature = "QCK";
-//AAAAA
-std::cout<<"ReadQuickLookFiles-8"<<std::endl;
+
     quickLookFile.FileLocation = GetChildText(el, "QUICKLOOK");
-//AAAAA
-std::cout<<"ReadQuickLookFiles-5"<<std::endl;
     if (quickLookFile.FileLocation.size() >= 2) {
         if (quickLookFile.FileLocation.substr(0, 2).compare("./") != 0) {
             quickLookFile.FileLocation.insert(0, "./");
         }
     }
-//AAAAA
-std::cout<<"ReadQuickLookFiles-3"<<std::endl;
+
     quickLookFile.LogicalName = GetLogicalFileName(quickLookFile.FileLocation, false);
-//AAAAA
-std::cout<<"ReadQuickLookFiles-4"<<std::endl;
+
     result.push_back(quickLookFile);
     return result;
 }
