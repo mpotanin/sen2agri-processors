@@ -297,6 +297,7 @@ std::string GetLogicalFileName(std::string filePath, bool withExtension)
       else
          return strFilename;
    }
+//
    /*
    // Create a Path object from File Path
    boost::filesystem::path pathObj(filePath);
