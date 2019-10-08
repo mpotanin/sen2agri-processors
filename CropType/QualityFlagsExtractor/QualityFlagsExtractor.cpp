@@ -244,6 +244,7 @@ private:
       m_primaryMissionImgWidth = -1;
       m_primaryMissionImgHeight = -1;
       m_bCutImages = false;
+
       for (const std::unique_ptr<MetadataHelper<short>>& helper: vectHelpers) {
           if(helper->GetMissionName().find(m_strPrimaryMission) != std::string::npos) {
               // get the image for the default resolution
@@ -258,18 +259,15 @@ private:
                 // and we use the one in the primary mission product
                 m_primaryMissionImgWidth = img->GetLargestPossibleRegion().GetSize()[0];// / scale;
                 m_primaryMissionImgHeight = img->GetLargestPossibleRegion().GetSize()[1];// / scale;
-
                 m_nPrimaryImgRes = img->GetSpacing()[0];
 
                 FloatVectorImageType::PointType origin = img->GetOrigin();
                 //InternalImageType::SpacingType spacing = reader->GetOutput()->GetSpacing();
                 m_primaryMissionImgOrigin[0] = origin[0];// + 0.5 * spacing[0] * (scale - 1.0);
                 m_primaryMissionImgOrigin[1] = origin[1];// + 0.5 * spacing[1] * (scale - 1.0);
-
                 m_strPrMissionImgProjRef = img->GetProjectionRef();
                 m_GenericRSImageResampler.SetOutputProjection(m_strPrMissionImgProjRef);
                 m_bCutImages = true;
-
                 break;
           }
       }

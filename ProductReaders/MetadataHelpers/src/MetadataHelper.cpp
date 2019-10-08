@@ -20,6 +20,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
+
 template<typename PixelType, typename MasksPixelType>
 MetadataHelper<PixelType, MasksPixelType>::MetadataHelper()
 {
@@ -37,9 +38,21 @@ bool MetadataHelper<PixelType, MasksPixelType>::LoadMetadataFile(const std::stri
     Reset();
     m_inputMetadataFileName = file;
 
-    boost::filesystem::path p(m_inputMetadataFileName);
-    p.remove_filename();
-    m_DirName = p.native();
+    //boost::filesystem::path p(m_inputMetadataFileName);
+    //p.remove_filename();
+    //m_DirName = p.native();
+//AAAAA
+std::cout<<"D1"<<std::endl;
+    
+    int nPos = file.rfind("/");
+    while (file[nPos-1]=='/')
+        nPos--;
+//AAAAA
+std::cout<<"D2"<<std::endl;
+    
+    m_DirName = file.substr(0,nPos);
+//AAAAA
+std::cout<<m_DirName<<std::endl;
 
     return DoLoadMetadata(file);
 }
@@ -161,9 +174,9 @@ bool MetadataHelper<PixelType, MasksPixelType>::GetTrueColourBandNames(std::stri
 template<typename PixelType, typename MasksPixelType>
 std::string MetadataHelper<PixelType, MasksPixelType>::buildFullPath(const std::string& fileName)
 {
-    boost::filesystem::path p(m_DirName);
-    p /= fileName;
-    return p.string();
+    //boost::filesystem::path p(m_DirName);
+    //p /= fileName;
+    return (m_DirName + "/" +fileName);
 }
 
 

@@ -233,7 +233,6 @@ void CropMaskTrainImagesClassifier::DoExecute()
       sp = parseSensorPreferences(spValues);
   }
 
-
   // Get the list of input files
   const std::vector<std::string> &descriptors = this->GetParameterStringList("il");
   if( descriptors.size()== 0 )
@@ -263,6 +262,7 @@ void CropMaskTrainImagesClassifier::DoExecute()
       numDesc = descriptors.size();
   }
 
+
   // get the required pixel size
   auto pixSize = this->GetParameterFloat("pixsize");
   // get the main mission
@@ -276,12 +276,14 @@ void CropMaskTrainImagesClassifier::DoExecute()
     itkExceptionMacro("The number of descriptors (" << descriptors.size() << ") is not consistent with the sum of products per tile (" << numDesc << ")")
     }
 
-
+//AAAA
+	std::cout<<"A3"<<std::endl;
 
   auto preprocessors = CropMaskPreprocessingList::New();
   auto bm = GetParameterEmpty("bm");
   auto window = GetParameterInt("window");
-
+//AAAA
+	std::cout<<"A4"<<std::endl;
   // Loop through the sets of products
   int startIndex = 0;
   int endIndex;
@@ -296,22 +298,34 @@ void CropMaskTrainImagesClassifier::DoExecute()
       preprocessor->SetPixelSize(pixSize);
       preprocessor->SetMission(mission);
 
+//AAAA
+	std::cout<<"A5"<<std::endl;
+
       if (GetParameterEmpty("rededge")) {
           preprocessor->SetIncludeRedEdge(true);
       }
 
+//AAAA
+	std::cout<<"A6"<<std::endl;
       preprocessor->SetBM(bm);
       preprocessor->SetW(window);
       preprocessor->SetDelta(0.05f);
       preprocessor->SetTSoil(0.2f);
 
       // compute the desired size of the processed rasters
+//AAAA
+	std::cout<<"A7"<<std::endl;
 
       preprocessor->updateRequiredImageSize(descriptors, startIndex, endIndex, td);
+//AAAA
+	std::cout<<"A8"<<std::endl;
       preprocessor->Build(descriptors.begin() + startIndex, descriptors.begin() + endIndex, td);
+//AAAA
+	std::cout<<"A9"<<std::endl;
 
     startIndex = endIndex;
   }
+
 
   const auto &sensorOutDays = getOutputDays(preprocessors, resamplingMode, mission, sp);
 
@@ -326,9 +340,6 @@ void CropMaskTrainImagesClassifier::DoExecute()
 
       images.emplace_back(output);
   }
-
-		//AAAA
-	std::cout<<"before CreateApplication"<<std::endl;
 
   auto app = otb::Wrapper::ApplicationRegistry::CreateApplication("TrainImagesClassifierNew");
   if (!app) {
@@ -454,8 +465,6 @@ void CropMaskTrainImagesClassifier::DoExecute()
 
   otbAppLogINFO("Training the classifier");
 
-		//AAAA
-	std::cout<<"Before Execution"<<std::endl;
   app->ExecuteAndWriteOutput();
   otbAppLogINFO("Training completed");
 }

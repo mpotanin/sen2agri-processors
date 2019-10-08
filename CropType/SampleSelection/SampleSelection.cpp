@@ -25,6 +25,8 @@
 #include <random>
 #include <unordered_map>
 
+#include <boost/filesystem.hpp>
+
 #include "otbWrapperApplication.h"
 #include "otbWrapperApplicationFactory.h"
 #include "otbOGRDataSourceToLabelImageFilter.h"
@@ -48,7 +50,7 @@ public:
 private:
     void DoInit()
     {
-        SetName("SampleSelectionAgri");
+	SetName("SampleSelectionAgri");
         SetDescription("Split the reference data into 2 disjoint sets, the training set and the "
                        "validation set.");
 

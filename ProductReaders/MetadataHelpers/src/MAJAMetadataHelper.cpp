@@ -110,14 +110,21 @@ typename MetadataHelper<PixelType, MasksPixelType>::ImageListType::Pointer MAJAM
 template <typename PixelType, typename MasksPixelType>
 bool MAJAMetadataHelper<PixelType, MasksPixelType>::LoadAndCheckMetadata(const std::string &file)
 {
+
+///AAAAAA
+std::cout<<"H1"<<std::endl;
+
     MAJAMetadataReaderType::Pointer majaMetadataReader = MAJAMetadataReaderType::New();
     // just check if the file is MACCS metadata file. In this case
     // the helper will return the hardcoded values from the constructor as these are not
     // present in the metadata
+///AAAAAA
+std::cout<<"H2"<<std::endl;
     if (this->m_metadata = majaMetadataReader->ReadMetadata(file)) {
         if (this->m_metadata->Header.FixedHeader.Mission.find(SENTINEL_MISSION_STR) != std::string::npos &&
                 this->m_metadata->Header.FixedHeader.SourceSystem == "MUSCATE") {
-
+///AAAAAA
+std::cout<<"H3"<<std::endl;
             this->m_AotQuantifVal = std::stod(this->m_metadata->ImageInformation.AOTQuantificationValue);
             this->m_AotNoDataVal = std::stod(this->m_metadata->ImageInformation.AOTNoDataValue);
 

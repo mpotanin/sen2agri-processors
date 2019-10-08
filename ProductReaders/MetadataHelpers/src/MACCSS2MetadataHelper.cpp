@@ -36,9 +36,14 @@ MACCSS2MetadataHelper<PixelType, MasksPixelType>::MACCSS2MetadataHelper()
 template <typename PixelType, typename MasksPixelType>
 bool MACCSS2MetadataHelper<PixelType, MasksPixelType>::LoadAndUpdateMetadataValues(const std::string &file)
 {
+///AAAAAA
+std::cout<<"F1"<<std::endl;
+
     if (!this->LoadAndCheckMetadata(file)) {
         return false;
     }
+///AAAAAA
+std::cout<<"F2"<<std::endl;
 
     // std::cout << "Using mission S2" << std::endl;
 
@@ -68,7 +73,11 @@ bool MACCSS2MetadataHelper<PixelType, MasksPixelType>::LoadAndUpdateMetadataValu
 template <typename PixelType, typename MasksPixelType>
 bool MACCSS2MetadataHelper<PixelType, MasksPixelType>::LoadAndCheckMetadata(const std::string &file)
 {
+///AAAAAA
+std::cout<<"G1"<<std::endl;
     MACCSMetadataReaderType::Pointer maccsMetadataReader = MACCSMetadataReaderType::New();
+///AAAAAA
+std::cout<<"G2"<<std::endl;
     // just check if the file is MACCS metadata file. In this case
     // the helper will return the hardcoded values from the constructor as these are not
     // present in the metadata

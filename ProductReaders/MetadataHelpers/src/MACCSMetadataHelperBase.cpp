@@ -29,8 +29,12 @@ MACCSMetadataHelperBase<PixelType, MasksPixelType>::MACCSMetadataHelperBase()
 template <typename PixelType, typename MasksPixelType>
 bool MACCSMetadataHelperBase<PixelType, MasksPixelType>::DoLoadMetadata(const std::string &file)
 {
+//AAAAA
+std::cout<<"MACCSMetadataHelperBase::DoLoadMetadata()"<<std::endl;
     if (LoadAndUpdateMetadataValues(file))
     {
+//AAAAA
+std::cout<<"E1"<<std::endl;
         this->m_Mission = this->m_metadata->Header.FixedHeader.Mission;
         // Transform names like SENTINEL-2A to SENTINEL2A
         this->m_Mission.erase(std::remove(this->m_Mission.begin(), this->m_Mission.end(), '-'), this->m_Mission.end());
@@ -42,7 +46,8 @@ bool MACCSMetadataHelperBase<PixelType, MasksPixelType>::DoLoadMetadata(const st
         // set the acquisition date
         this->m_AcquisitionDate = this->m_metadata->InstanceId.AcquisitionDate;
         this->m_AcquisitionDateTime = this->m_metadata->ProductInformation.AcquisitionDateTime;
-
+//AAAAA
+std::cout<<"E2"<<std::endl;
         // Remove the eventual UTC= from the prefix of the date
         std::string &acqDateTime = this->m_AcquisitionDateTime;
         std::string::size_type pos = acqDateTime.find('=');
@@ -53,7 +58,8 @@ bool MACCSMetadataHelperBase<PixelType, MasksPixelType>::DoLoadMetadata(const st
         // we need just to replace - and : from it
         acqDateTime.erase(std::remove(acqDateTime.begin(), acqDateTime.end(), '-'), acqDateTime.end());
         acqDateTime.erase(std::remove(acqDateTime.begin(), acqDateTime.end(), ':'), acqDateTime.end());
-
+//AAAAA
+std::cout<<"E3"<<std::endl;
         this->m_strNoDataValue = this->m_metadata->ImageInformation.NoDataValue;
 
         //TODO: Add initialization for mean angles (solar and sensor)

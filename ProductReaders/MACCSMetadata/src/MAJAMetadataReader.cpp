@@ -31,12 +31,19 @@ namespace itk
 
 std::unique_ptr<MACCSFileMetadata> MAJAMetadataReader::ReadMetadata(const std::string &path)
 {
+//AAAAA
+std::cout<<"ReadMetadata"<<std::endl;
+
     TiXmlDocument doc(path);
     if (!doc.LoadFile()) {
         return nullptr;
     }
+//AAAAA
+std::cout<<"ReadMetadata2"<<std::endl;
 
     auto metadata = ReadMetadataXml(doc);
+//AAAAA
+std::cout<<"ReadMetadata3"<<std::endl;
     if (metadata) {
         metadata->ProductPath = path;
     }
@@ -224,33 +231,45 @@ std::vector<CommonFileInformation> ReadGeneralImageList(const TiXmlElement *el, 
 }
 
 std::vector<CommonFileInformation> ReadQuickLookFiles(const TiXmlElement *el) {
+//AAAAA
+std::cout<<"ReadQuickLookFiles-1"<<std::endl;
     std::vector<CommonFileInformation> result;
     if (!el) {
         return result;
     }
-
+//AAAAA
+std::cout<<"ReadQuickLookFiles-2"<<std::endl;
     CommonFileInformation quickLookFile;
     quickLookFile.BandNumber = -1;
     quickLookFile.BitNumber = -1;
     quickLookFile.Nature = "QCK";
+//AAAAA
+std::cout<<"ReadQuickLookFiles-8"<<std::endl;
     quickLookFile.FileLocation = GetChildText(el, "QUICKLOOK");
+//AAAAA
+std::cout<<"ReadQuickLookFiles-5"<<std::endl;
     if (quickLookFile.FileLocation.size() >= 2) {
         if (quickLookFile.FileLocation.substr(0, 2).compare("./") != 0) {
             quickLookFile.FileLocation.insert(0, "./");
         }
     }
+//AAAAA
+std::cout<<"ReadQuickLookFiles-3"<<std::endl;
     quickLookFile.LogicalName = GetLogicalFileName(quickLookFile.FileLocation, false);
-
+//AAAAA
+std::cout<<"ReadQuickLookFiles-4"<<std::endl;
     result.push_back(quickLookFile);
     return result;
 }
 
 CommonProductOrganization ReadMAJAProductOrganization(const TiXmlElement *el)
 {
+
     CommonProductOrganization result;
     if (!el) {
         return result;
     }
+
     auto muscateProductEl = el->FirstChildElement("Muscate_Product");
     if(!muscateProductEl) {
         return result;
@@ -258,10 +277,13 @@ CommonProductOrganization ReadMAJAProductOrganization(const TiXmlElement *el)
     CommonFileInformation quickLookFile;
 
     result.QuickLookFiles = ReadQuickLookFiles(muscateProductEl);
+
     result.ImageFiles = ReadGeneralImageList(muscateProductEl, "Image_List", "Image",
                          "Image_Properties", "Image_File_List", "IMAGE_FILE");
+
     std::vector<CommonFileInformation> tmpFiles =  ReadGeneralImageList(muscateProductEl, "Mask_List", "Mask",
                          "Mask_Properties", "Mask_File_List", "MASK_FILE");
+
     for (auto tmpFile : tmpFiles) {
         CommonAnnexInformation maskFile;
         maskFile.File = std::move(tmpFile);
@@ -471,24 +493,36 @@ std::unique_ptr<MACCSFileMetadata> ConvertToMACCSStructure(std::unique_ptr<MAJAF
 
 std::unique_ptr<MACCSFileMetadata> MAJAMetadataReader::ReadMetadataXml(const TiXmlDocument &doc)
 {
+//AAAAA
+std::cout<<"ReadMetadataXml"<<std::endl;
+
+
     TiXmlHandle hDoc(const_cast<TiXmlDocument *>(&doc));
 
     // BUG: TinyXML can't properly read stylesheet declarations, see
     // http://sourceforge.net/p/tinyxml/patches/37/
     // Our files start with one, but we can't read it in.
     auto rootElement = hDoc.FirstChildElement("Muscate_Metadata_Document").ToElement();
+//AAAAA
+std::cout<<"ReadMetadataXml-2"<<std::endl;
 
     if (!rootElement) {
         return nullptr;
     }
 
     std::unique_ptr<MAJAFileMetadata> file = std::unique_ptr<MAJAFileMetadata>(new MAJAFileMetadata);
+//AAAAA
+std::cout<<"ReadMetadataXml-3"<<std::endl;
 
     file->MetadataIdentification = ReadMAJAMetadataIdentification(rootElement->FirstChildElement("Metadata_Identification"));
     file->DatasetIdentification = ReadMAJADatasetIdentification(rootElement->FirstChildElement("Dataset_Identification"));
     file->ProductCharacteristics = ReadMAJAProductCharacteristics(rootElement->FirstChildElement("Product_Characteristics"), rootElement->FirstChildElement("Geoposition_Informations"));
+//AAAAA
+std::cout<<"ReadMetadataXml-4"<<std::endl;
     file->ProductOrganization = ReadMAJAProductOrganization(rootElement->FirstChildElement("Product_Organisation"));
+
     file->GeometricInformation = ReadMAJAGeometricInformation(rootElement->FirstChildElement("Geometric_Informations"));
+
     file->RadiometricInformation = ReadMAJARadiometricInformation(rootElement->FirstChildElement("Radiometric_Informations"));
 
     return ConvertToMACCSStructure(file);
