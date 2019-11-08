@@ -125,7 +125,7 @@ private:
       SetName("XMLStatistics");
       SetDescription("Convert the confusion matrix and quality metrics to XML.");
 
-      SetDocName("XMLStatistics");
+      //SetDocName("XMLStatistics");
       SetDocLongDescription("Convert the confusion matrix and quality metrics to XML");
       SetDocLimitations("None");
       SetDocAuthors("LBU");
