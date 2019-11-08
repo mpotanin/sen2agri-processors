@@ -146,7 +146,7 @@ private:
       SetName("CropMaskImageClassifier");
       SetDescription("Build the statistics from a set of tiles");
 
-      SetDocName("CropMaskImageClassifier");
+      //SetDocName("CropMaskImageClassifier");
       SetDocLongDescription("Build the statistics from a set of tiles.");
       SetDocLimitations("None");
       SetDocAuthors("LN");
@@ -192,13 +192,13 @@ private:
     AddParameter(ParameterType_String, "mission", "The main raster series that will be used. By default SPOT is used");
     MandatoryOff("mission");
 
-    AddParameter(ParameterType_Empty, "rededge", "Include Sentinel-2 vegetation red edge bands");
+    AddParameter(ParameterType_Bool, "rededge", "Include Sentinel-2 vegetation red edge bands");
     MandatoryOff("rededge");
 
     AddParameter(ParameterType_Int, "window", "The number of dates in the temporal window");
     SetDefaultParameterInt("window", 2);
 
-    AddParameter(ParameterType_Empty,
+    AddParameter(ParameterType_Bool,
                  "bm",
                  "If set use the features from Benchmarking instead of the features from ATBD");
     MandatoryOff("bm");
@@ -271,7 +271,9 @@ private:
           mission = this->GetParameterString("mission");
       }
 
-      auto bm = GetParameterEmpty("bm");
+      //auto bm = GetParameterEmpty("bm");
+      bool bm = IsParameterEnabled("bm");
+      
       auto window = GetParameterInt("window");
 
       TileData td;
@@ -280,7 +282,8 @@ private:
       m_Preprocessor = CropMaskPreprocessing::New();
       m_Preprocessor->SetPixelSize(pixSize);
       m_Preprocessor->SetMission(mission);
-      if (GetParameterEmpty("rededge")) {
+      //if (GetParameterEmpty("rededge")) {
+      if (IsParameterEnabled("rededge")) {
           m_Preprocessor->SetIncludeRedEdge(true);
       }
 
