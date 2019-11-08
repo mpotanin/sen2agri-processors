@@ -139,7 +139,7 @@ public:
         SetName("NDVISeries");
         SetDescription("Extracts a temporally-resampled NDVI series");
 
-        SetDocName("NDVISeries");
+        //SetDocName("NDVISeries");
         SetDocLongDescription("Extracts a temporally-resampled NDVI series.");
         SetDocLimitations("None");
         SetDocSeeAlso(" ");
