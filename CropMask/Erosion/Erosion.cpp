@@ -146,7 +146,7 @@ private:
       SetName("Erosion");
       SetDescription("The feature extraction step produces the relevant features for the classication.");
 
-      SetDocName("Erosion");
+      //SetDocName("Erosion");
       SetDocLongDescription("The feature extraction step produces the relevant features for the classication. The features are computed"
                             "for each date of the resampled and gaplled time series and concatenated together into a single multi-channel"
                             "image file. The selected features are the surface reflectances, the NDVI, the NDWI and the brightness.");
