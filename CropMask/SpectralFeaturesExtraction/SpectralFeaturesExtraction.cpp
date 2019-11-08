@@ -380,7 +380,7 @@ private:
         SetDescription(
             "Spectral feature extraction for unsupervised crop mask.");
 
-        SetDocName("SpectralFeaturesExtraction");
+        //SetDocName("SpectralFeaturesExtraction");
         SetDocLongDescription("Spectral feature extraction for unsupervised crop mask.");
         SetDocLimitations("None");
         SetDocSeeAlso(" ");
@@ -423,7 +423,7 @@ private:
 
         AddParameter(ParameterType_Float, "lambda", "Smoothing parameter of the Whittaker function");
 
-        AddParameter(ParameterType_Empty, "rededge", "Include Sentinel-2 vegetation red edge bands");
+        AddParameter(ParameterType_Bool, "rededge", "Include Sentinel-2 vegetation red edge bands");
         MandatoryOff("rededge");
 
         SetDefaultParameterFloat("lambda", 2);
@@ -485,7 +485,7 @@ private:
         m_Preprocessor = SpectralFeaturesPreprocessing::New();
         m_Preprocessor->SetPixelSize(pixSize);
         m_Preprocessor->SetMission(mission);
-        if (GetParameterEmpty("rededge")) {
+        if (IsParameterEnabled("rededge")) {
             m_Preprocessor->SetIncludeRedEdge(true);
         }
         m_Preprocessor->SetLambda(lambda);
