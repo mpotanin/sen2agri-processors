@@ -156,7 +156,7 @@ private:
       SetName("Trimming");
       SetDescription("The feature extraction step produces the relevant features for the classication.");
 
-      SetDocName("Trimming");
+      //SetDocName("Trimming");
       SetDocLongDescription("The feature extraction step produces the relevant features for the classication. The features are computed"
                             "for each date of the resampled and gaplled time series and concatenated together into a single multi-channel"
                             "image file. The selected features are the surface reflectances, the NDVI, the NDWI and the brightness.");
@@ -198,7 +198,7 @@ private:
     // This application is called in the context of the unsupervised crop mask processor, where the input has more features
     // than should be used for trimming. It would be better to make the channel list configurable, but for now allow the
     // user to disable that hard-coded selection for inputs which don't have 5 bands.
-    AddParameter(ParameterType_Empty, "allbands", "Use all bands from the input file");
+    AddParameter(ParameterType_Bool, "allbands", "Use all bands from the input file");
     MandatoryOff("allbands");
 
     AddParameter(ParameterType_OutputImage, "out", "The training samples raster file");
@@ -259,7 +259,7 @@ private:
       const double alpha = GetParameterFloat("alpha");
       const int nbSamples = GetParameterInt("nbsamples");
       const int seed = GetParameterInt("seed");
-      auto allbands = GetParameterEmpty("allbands");
+      auto allbands = IsParameterEnabled("allbands");
 
       //Read the Features input file
       m_FeaturesReader->SetFileName(GetParameterString("feat"));
