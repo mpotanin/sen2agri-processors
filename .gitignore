@@ -456,7 +456,6 @@
 /CropType/FeatureExtraction/test/Makefile
 /CropType/FeatureExtraction/test/CTestTestfile.cmake
 /CropType/FeatureExtraction/test/CMakeLists.txt
-/CropType/FeatureExtraction/FeatureExtraction.cpp
 /CropType/FeatureExtraction/CTestTestfile.cmake
 /CropType/FeatureExtraction/CMakeLists.txt
 /CropType/FeatureExtraction/FeatureExtraction.hxx
@@ -2137,7 +2136,6 @@
 /Common/CropTypeImageClassifier/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/CropTypeImageClassifier/test/Makefile
 /Common/CropTypeImageClassifier/test/CTestTestfile.cmake
-/Common/CropTypeImageClassifier/CropTypeImageClassifier.cpp
 /Common/CropTypeImageClassifier/CTestTestfile.cmake
 /Common/CropMaskImageClassifier/cmake_install.cmake
 /Common/CropMaskImageClassifier/CMakeFiles/otbapp_CropMaskImageClassifier.dir/flags.make
@@ -2197,7 +2195,6 @@
 /Common/CropTypeTrainImagesClassifier/CMakeFiles/otbapp_CropTypeTrainImagesClassifier.dir/cmake_clean.cmake
 /Common/CropTypeTrainImagesClassifier/CMakeFiles/progress.marks
 /Common/CropTypeTrainImagesClassifier/CMakeFiles/CMakeDirectoryInformation.cmake
-/Common/CropTypeTrainImagesClassifier/otbTrainImagesClassifier.cxx
 /Common/CropTypeTrainImagesClassifier/Makefile
 /Common/CropTypeTrainImagesClassifier/test/cmake_install.cmake
 /Common/CropTypeTrainImagesClassifier/test/CMakeFiles/progress.marks
@@ -2248,7 +2245,6 @@
 /Common/CropTypeStatistics/CMakeFiles/progress.marks
 /Common/CropTypeStatistics/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/CropTypeStatistics/Makefile
-/Common/CropTypeStatistics/CropTypeStatistics.cxx
 /Common/CropTypeStatistics/CTestTestfile.cmake
 /Common/XmlUtils/cmake_install.cmake
 /Common/XmlUtils/CMakeFiles/progress.marks
