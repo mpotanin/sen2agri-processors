@@ -2202,7 +2202,6 @@
 /Common/CropTypeTrainImagesClassifier/test/Makefile
 /Common/CropTypeTrainImagesClassifier/test/CTestTestfile.cmake
 /Common/CropTypeTrainImagesClassifier/CTestTestfile.cmake
-/Common/CropTypeTrainImagesClassifier/otbTrainImagesClassifier.h
 /Common/XMLStatistics/cmake_install.cmake
 /Common/XMLStatistics/CMakeFiles/otbapp_XMLStatistics.dir/flags.make
 /Common/XMLStatistics/CMakeFiles/otbapp_XMLStatistics.dir/progress.make
@@ -2279,7 +2278,6 @@
 /Common/FeatureExtractor/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/FeatureExtractor/test/Makefile
 /Common/FeatureExtractor/test/CTestTestfile.cmake
-/Common/FeatureExtractor/FeatureExtractor.cpp
 /Common/FeatureExtractor/CTestTestfile.cmake
 /CropMask/cmake_install.cmake
 /CropMask/RandomForestTraining/cmake_install.cmake
@@ -2300,7 +2298,6 @@
 /CropMask/RandomForestTraining/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/RandomForestTraining/test/Makefile
 /CropMask/RandomForestTraining/test/CTestTestfile.cmake
-/CropMask/RandomForestTraining/ListSampleClassStatistics.hpp
 /CropMask/RandomForestTraining/CTestTestfile.cmake
 /CropMask/DataSmoothing/cmake_install.cmake
 /CropMask/DataSmoothing/CMakeFiles/otbapp_DataSmoothing.dir/flags.make
