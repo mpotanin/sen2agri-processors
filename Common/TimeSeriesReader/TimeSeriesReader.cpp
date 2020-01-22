@@ -62,6 +62,7 @@ const std::vector<MissionDays> readOutputDays(const std::string &file)
 
 void TimeSeriesReader::Build(std::vector<std::string>::const_iterator begin, std::vector<std::string>::const_iterator end, const TileData &td)
 {
+
     auto factory = MetadataHelperFactory::New();
 
     for (auto it = begin; it != end; ++it) {
@@ -97,6 +98,7 @@ void TimeSeriesReader::Build(std::vector<std::string>::const_iterator begin, std
     }
     m_RedEdgeBandConcat->SetInput(m_RedEdgeBandImageList);
     m_RedEdgeMaskConcat->SetInput(m_RedEdgeMaskImageList);
+
 }
 
 void TimeSeriesReader::updateRequiredImageSize(const std::vector<std::string>& descriptors, int startIndex, int endIndex, TileData& td) {
@@ -109,15 +111,20 @@ void TimeSeriesReader::updateRequiredImageSize(const std::vector<std::string>& d
 
     for (int i = startIndex; i < endIndex; i++) {
         const std::string& desc = descriptors[i];
+
         std::unique_ptr<MetadataHelper<float, uint8_t>> pHelper = factory->GetMetadataHelper<float, uint8_t>(desc);
+
 
         if (pHelper->GetMissionShortName() == m_mission) {
 
-            const std::vector<std::string> &firsResBandNames = pHelper->GetBandNamesForResolution(pHelper->GetProductResolutions()[0]);
-            MetadataHelper<float, uint8_t>::VectorImageType::Pointer img = pHelper->GetImage(firsResBandNames);
-            img->UpdateOutputInformation();
-            float curRes = img->GetSpacing()[0];
+            const std::vector<std::string> &firstResBandNames = pHelper->GetBandNamesForResolution(pHelper->GetProductResolutions()[0]);
 
+
+            MetadataHelper<float, uint8_t>::VectorImageType::Pointer img = pHelper->GetImage(firstResBandNames);
+            
+            img->UpdateOutputInformation();
+
+            float curRes = img->GetSpacing()[0];
 
             const float scale = (float)m_pixSize / curRes;
             td.m_imageWidth = img->GetLargestPossibleRegion().GetSize()[0] / scale;

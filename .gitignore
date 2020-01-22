@@ -460,7 +460,6 @@
 /CropType/FeatureExtraction/CTestTestfile.cmake
 /CropType/FeatureExtraction/CMakeLists.txt
 /CropType/FeatureExtraction/FeatureExtraction.hxx
-/CropType/CMakeLists.txt
 /CropType/QualityFlagsExtractor/cmake_install.cmake
 /CropType/QualityFlagsExtractor/CMakeFiles/otbapp_QualityFlagsExtractor.dir/flags.make
 /CropType/QualityFlagsExtractor/CMakeFiles/otbapp_QualityFlagsExtractor.dir/progress.make
@@ -1982,7 +1981,6 @@
 /Sen4CAP/CMakeLists.txt
 /fix_utm_proj/fix_utm_proj.py
 /CTestTestfile.cmake
-/CMakeLists.txt
 /aggregate_tiles/aggregate_tiles.py
 /aggregate_tiles/aggregate_tiles_v0.py
 /aggregate_tiles/run.sh
@@ -2022,7 +2020,6 @@
 /Common/NDVISeries/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/NDVISeries/test/Makefile
 /Common/NDVISeries/test/CTestTestfile.cmake
-/Common/NDVISeries/test/CMakeLists.txt
 /Common/NDVISeries/CTestTestfile.cmake
 /Common/CMakeFiles/progress.marks
 /Common/CMakeFiles/CMakeDirectoryInformation.cmake
@@ -2066,7 +2063,6 @@
 /Common/ComputeClassCounts/CMakeLists.txt
 /Common/ComputeClassCounts/otbStreamingHistogramImageFilter.h
 /Common/TrainImagesClassifierNew/cmake_install.cmake
-/Common/TrainImagesClassifierNew/otbTrainGradientBoostedTree.cxx
 /Common/TrainImagesClassifierNew/CMakeFiles/otbapp_TrainImagesClassifierNew.dir/flags.make
 /Common/TrainImagesClassifierNew/CMakeFiles/otbapp_TrainImagesClassifierNew.dir/progress.make
 /Common/TrainImagesClassifierNew/CMakeFiles/otbapp_TrainImagesClassifierNew.dir/DependInfo.cmake
@@ -2076,29 +2072,11 @@
 /Common/TrainImagesClassifierNew/CMakeFiles/otbapp_TrainImagesClassifierNew.dir/cmake_clean.cmake
 /Common/TrainImagesClassifierNew/CMakeFiles/progress.marks
 /Common/TrainImagesClassifierNew/CMakeFiles/CMakeDirectoryInformation.cmake
-/Common/TrainImagesClassifierNew/otbTrainNormalBayes.cxx
-/Common/TrainImagesClassifierNew/otbTrainImagesClassifier.cxx
-/Common/TrainImagesClassifierNew/Makefile
-/Common/TrainImagesClassifierNew/otbTrainNeuralNetwork.cxx
-/Common/TrainImagesClassifierNew/otbListSampleGeneratorRaster.txx
 /Common/TrainImagesClassifierNew/test/cmake_install.cmake
 /Common/TrainImagesClassifierNew/test/CMakeFiles/progress.marks
 /Common/TrainImagesClassifierNew/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/TrainImagesClassifierNew/test/Makefile
 /Common/TrainImagesClassifierNew/test/CTestTestfile.cmake
-/Common/TrainImagesClassifierNew/test/CMakeLists.txt
-/Common/TrainImagesClassifierNew/otbListSampleGeneratorEx.h
-/Common/TrainImagesClassifierNew/otbTrainSVM.cxx
-/Common/TrainImagesClassifierNew/otbTrainDecisionTree.cxx
-/Common/TrainImagesClassifierNew/otbListSampleGeneratorRaster.h
-/Common/TrainImagesClassifierNew/otbTrainKNN.cxx
-/Common/TrainImagesClassifierNew/otbTrainLibSVM.cxx
-/Common/TrainImagesClassifierNew/otbTrainBoost.cxx
-/Common/TrainImagesClassifierNew/otbListSampleGeneratorEx.txx
-/Common/TrainImagesClassifierNew/CTestTestfile.cmake
-/Common/TrainImagesClassifierNew/CMakeLists.txt
-/Common/TrainImagesClassifierNew/otbTrainImagesClassifier.h
-/Common/TrainImagesClassifierNew/otbTrainRandomForests.cxx
 /Common/CropMaskTrainImagesClassifier/cmake_install.cmake
 /Common/CropMaskTrainImagesClassifier/CMakeFiles/progress.marks
 /Common/CropMaskTrainImagesClassifier/CMakeFiles/CMakeDirectoryInformation.cmake
@@ -2115,7 +2093,6 @@
 /Common/CropMaskTrainImagesClassifier/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/CropMaskTrainImagesClassifier/test/Makefile
 /Common/CropMaskTrainImagesClassifier/test/CTestTestfile.cmake
-/Common/CropMaskTrainImagesClassifier/test/CMakeLists.txt
 /Common/CropMaskTrainImagesClassifier/CTestTestfile.cmake
 /Common/Makefile
 /Common/CropMaskStatistics/cmake_install.cmake
@@ -2160,10 +2137,8 @@
 /Common/CropTypeImageClassifier/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/CropTypeImageClassifier/test/Makefile
 /Common/CropTypeImageClassifier/test/CTestTestfile.cmake
-/Common/CropTypeImageClassifier/test/CMakeLists.txt
 /Common/CropTypeImageClassifier/CropTypeImageClassifier.cpp
 /Common/CropTypeImageClassifier/CTestTestfile.cmake
-/Common/CropTypeImageClassifier/CMakeLists.txt
 /Common/CropMaskImageClassifier/cmake_install.cmake
 /Common/CropMaskImageClassifier/CMakeFiles/otbapp_CropMaskImageClassifier.dir/flags.make
 /Common/CropMaskImageClassifier/CMakeFiles/otbapp_CropMaskImageClassifier.dir/progress.make
@@ -2180,7 +2155,6 @@
 /Common/CropMaskImageClassifier/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/CropMaskImageClassifier/test/Makefile
 /Common/CropMaskImageClassifier/test/CTestTestfile.cmake
-/Common/CropMaskImageClassifier/test/CMakeLists.txt
 /Common/CropMaskImageClassifier/CTestTestfile.cmake
 /Common/LabelImageMorphologicalOperation/cmake_install.cmake
 /Common/LabelImageMorphologicalOperation/LabelImageMorphologicalOperation.cxx
@@ -2230,9 +2204,7 @@
 /Common/CropTypeTrainImagesClassifier/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/CropTypeTrainImagesClassifier/test/Makefile
 /Common/CropTypeTrainImagesClassifier/test/CTestTestfile.cmake
-/Common/CropTypeTrainImagesClassifier/test/CMakeLists.txt
 /Common/CropTypeTrainImagesClassifier/CTestTestfile.cmake
-/Common/CropTypeTrainImagesClassifier/CMakeLists.txt
 /Common/CropTypeTrainImagesClassifier/otbTrainImagesClassifier.h
 /Common/XMLStatistics/cmake_install.cmake
 /Common/XMLStatistics/CMakeFiles/otbapp_XMLStatistics.dir/flags.make
@@ -2250,7 +2222,6 @@
 /Common/XMLStatistics/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/XMLStatistics/test/Makefile
 /Common/XMLStatistics/test/CTestTestfile.cmake
-/Common/XMLStatistics/test/CMakeLists.txt
 /Common/XMLStatistics/CTestTestfile.cmake
 /Common/TimeSeriesReader/cmake_install.cmake
 /Common/TimeSeriesReader/CMakeFiles/progress.marks
@@ -2279,7 +2250,6 @@
 /Common/CropTypeStatistics/Makefile
 /Common/CropTypeStatistics/CropTypeStatistics.cxx
 /Common/CropTypeStatistics/CTestTestfile.cmake
-/Common/CropTypeStatistics/CMakeLists.txt
 /Common/XmlUtils/cmake_install.cmake
 /Common/XmlUtils/CMakeFiles/progress.marks
 /Common/XmlUtils/CMakeFiles/CMakeDirectoryInformation.cmake
@@ -2313,11 +2283,8 @@
 /Common/FeatureExtractor/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /Common/FeatureExtractor/test/Makefile
 /Common/FeatureExtractor/test/CTestTestfile.cmake
-/Common/FeatureExtractor/test/CMakeLists.txt
 /Common/FeatureExtractor/FeatureExtractor.cpp
 /Common/FeatureExtractor/CTestTestfile.cmake
-/Common/FeatureExtractor/CMakeLists.txt
-/Common/CMakeLists.txt
 /CropMask/cmake_install.cmake
 /CropMask/RandomForestTraining/cmake_install.cmake
 /CropMask/RandomForestTraining/CMakeFiles/otbapp_RandomForestTraining.dir/flags.make
@@ -2337,11 +2304,9 @@
 /CropMask/RandomForestTraining/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/RandomForestTraining/test/Makefile
 /CropMask/RandomForestTraining/test/CTestTestfile.cmake
-/CropMask/RandomForestTraining/test/CMakeLists.txt
 /CropMask/RandomForestTraining/RandomForestTraining.cpp
 /CropMask/RandomForestTraining/ListSampleClassStatistics.hpp
 /CropMask/RandomForestTraining/CTestTestfile.cmake
-/CropMask/RandomForestTraining/CMakeLists.txt
 /CropMask/DataSmoothing/cmake_install.cmake
 /CropMask/DataSmoothing/CMakeFiles/otbapp_DataSmoothing.dir/flags.make
 /CropMask/DataSmoothing/CMakeFiles/otbapp_DataSmoothing.dir/progress.make
@@ -2359,10 +2324,8 @@
 /CropMask/DataSmoothing/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/DataSmoothing/test/Makefile
 /CropMask/DataSmoothing/test/CTestTestfile.cmake
-/CropMask/DataSmoothing/test/CMakeLists.txt
 /CropMask/DataSmoothing/DataSmoothing.hxx
 /CropMask/DataSmoothing/CTestTestfile.cmake
-/CropMask/DataSmoothing/CMakeLists.txt
 /CropMask/CMakeFiles/progress.marks
 /CropMask/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/Makefile
@@ -2424,7 +2387,6 @@
 /CropMask/Erosion/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/Erosion/test/Makefile
 /CropMask/Erosion/test/CTestTestfile.cmake
-/CropMask/Erosion/test/CMakeLists.txt
 /CropMask/Erosion/CTestTestfile.cmake
 /CropMask/Trimming/cmake_install.cmake
 /CropMask/Trimming/CMakeFiles/progress.marks
@@ -2442,7 +2404,6 @@
 /CropMask/Trimming/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/Trimming/test/Makefile
 /CropMask/Trimming/test/CTestTestfile.cmake
-/CropMask/Trimming/test/CMakeLists.txt
 /CropMask/Trimming/CTestTestfile.cmake
 /CropMask/RandomSelection/cmake_install.cmake
 /CropMask/RandomSelection/CMakeFiles/otbapp_RandomSelection.dir/flags.make
@@ -2480,7 +2441,6 @@
 /CropMask/PrincipalComponentAnalysis/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/PrincipalComponentAnalysis/test/Makefile
 /CropMask/PrincipalComponentAnalysis/test/CTestTestfile.cmake
-/CropMask/PrincipalComponentAnalysis/test/CMakeLists.txt
 /CropMask/PrincipalComponentAnalysis/CTestTestfile.cmake
 /CropMask/TestScripts/tc4-4.sh
 /CropMask/TestScripts/tc4-8.sh
@@ -2524,7 +2484,6 @@
 /CropMask/SpectralFeaturesExtraction/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/SpectralFeaturesExtraction/test/Makefile
 /CropMask/SpectralFeaturesExtraction/test/CTestTestfile.cmake
-/CropMask/SpectralFeaturesExtraction/test/CMakeLists.txt
 /CropMask/SpectralFeaturesExtraction/CTestTestfile.cmake
 /CropMask/MajorityVoting/cmake_install.cmake
 /CropMask/MajorityVoting/CMakeFiles/otbapp_MajorityVoting.dir/flags.make
@@ -2542,7 +2501,6 @@
 /CropMask/MajorityVoting/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/MajorityVoting/test/Makefile
 /CropMask/MajorityVoting/test/CTestTestfile.cmake
-/CropMask/MajorityVoting/test/CMakeLists.txt
 /CropMask/MajorityVoting/CTestTestfile.cmake
 /CropMask/FeaturesWithInsitu/cmake_install.cmake
 /CropMask/FeaturesWithInsitu/CMakeFiles/otbapp_FeaturesWithInsitu.dir/flags.make
@@ -2566,7 +2524,6 @@
 /CropMask/FeaturesWithInsitu/CMakeLists.txt
 /CropMask/FeaturesWithInsitu/FeaturesWithInsitu.cpp
 /CropMask/CTestTestfile.cmake
-/CropMask/CMakeLists.txt
 /CropMask/MeanShiftSegmentation/cmake_install.cmake
 /CropMask/MeanShiftSegmentation/CMakeFiles/otbapp_MeanShiftSegmentation.dir/flags.make
 /CropMask/MeanShiftSegmentation/CMakeFiles/otbapp_MeanShiftSegmentation.dir/progress.make
@@ -2584,9 +2541,7 @@
 /CropMask/MeanShiftSegmentation/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /CropMask/MeanShiftSegmentation/test/Makefile
 /CropMask/MeanShiftSegmentation/test/CTestTestfile.cmake
-/CropMask/MeanShiftSegmentation/test/CMakeLists.txt
 /CropMask/MeanShiftSegmentation/CTestTestfile.cmake
-/CropMask/MeanShiftSegmentation/CMakeLists.txt
 /merge_code_copyright.py
 /ProductFormatters/cmake_install.cmake
 /ProductFormatters/CMakeFiles/progress.marks
@@ -2693,7 +2648,6 @@
 /ProductReaders/MetadataHelpers/test/CMakeFiles/CMakeDirectoryInformation.cmake
 /ProductReaders/MetadataHelpers/test/Makefile
 /ProductReaders/MetadataHelpers/test/CTestTestfile.cmake
-/ProductReaders/MetadataHelpers/test/CMakeLists.txt
 /ProductReaders/MetadataHelpers/CTestTestfile.cmake
 /ProductReaders/MACCSMetadata/cmake_install.cmake
 /ProductReaders/MACCSMetadata/CMakeFiles/progress.marks
@@ -2855,7 +2809,6 @@
 /ProductReaders/MACCSMetadata/test/TestSPOT4Reader.cpp
 /ProductReaders/MACCSMetadata/test/CTestTestfile.cmake
 /ProductReaders/MACCSMetadata/test/STO.xml
-/ProductReaders/MACCSMetadata/test/CMakeLists.txt
 /ProductReaders/MACCSMetadata/test/SENSOR_QUALITY.xml
 /ProductReaders/MACCSMetadata/test/SENTINEL2A_20160928-105637-665_L2A_T31UDS_C_V1-0_JPI_ALL.xml
 /ProductReaders/MACCSMetadata/test/S2A_OPER_SSC_PDTANX_L2VALD_15SVD____20091211_CLD_R1.HDR

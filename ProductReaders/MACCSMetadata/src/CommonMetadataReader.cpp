@@ -40,6 +40,8 @@ std::string getRasterFile(const MACCSFileMetadata &metadata, const char *suffix)
 
 std::string getRasterFile(const SPOT4Metadata &metadata, const std::string &file)
 {
+    std::string file;
+
     boost::filesystem::path p(metadata.ProductPath);
     p.remove_filename();
     p /= file;

@@ -259,40 +259,6 @@ void TrainImagesClassifierNew::Classify(ListSampleType::Pointer validationListSa
     predictedList = model->PredictBatch(validationListSample);
     model->SetTargetListSample(predictedList);
 
-    //model->PredictAll();
-
-/*
-template <class TInputValue, class TOutputValue>
-void
-MachineLearningModel<TInputValue,TOutputValue>
-::PredictAll()
-{
-  TargetListSampleType * targets = this->GetTargetListSample();
-  targets->Clear();
-
-  for(typename InputListSampleType::ConstIterator sIt = this->GetInputListSample()->Begin();
-      sIt!=this->GetInputListSample()->End(); ++sIt)
-    {
-    targets->PushBack(this->Predict(sIt.GetMeasurementVector()));
-    }
-}
-
-
-
-
-MachineLearningModel<TInputValue, TOutputValue, TConfidenceValue>::Predict(const InputSampleType& input, ConfidenceValueType* quality,
-                                                                           ProbaSampleType* proba) const
- 
- Predict a single sample
-   param input The sample
-   param quality A pointer to the quality variable were to store
-   quality value, or NULL
-return The predicted label
-    
-//  TargetSampleType Predict(const InputSampleType& input, ConfidenceValueType* quality = nullptr, ProbaSampleType* proba = nullptr) const;
-
-*/
-
 
 }
 

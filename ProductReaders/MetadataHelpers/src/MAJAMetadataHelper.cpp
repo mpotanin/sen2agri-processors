@@ -39,9 +39,12 @@ template <typename PixelType, typename MasksPixelType>
 typename MetadataHelper<PixelType, MasksPixelType>::VectorImageType::Pointer MAJAMetadataHelper<PixelType, MasksPixelType>::GetImage(const std::vector<std::string> &bandNames,
                                                                                  std::vector<int> *pRetRelBandIdxs, int outRes)
 {
+
+
     std::vector<std::string> validBandNames;
     std::vector<int> retBandIdxs(bandNames.size());
     this->GetValidBandNames(bandNames, validBandNames, retBandIdxs, outRes);
+
 
     if (pRetRelBandIdxs != NULL) {
         (*pRetRelBandIdxs) = retBandIdxs;
@@ -50,10 +53,14 @@ typename MetadataHelper<PixelType, MasksPixelType>::VectorImageType::Pointer MAJ
     // if we have only one band requested, then return only that band
     if (validBandNames.size() == 1) {
         typename MACCSMetadataHelperBase<PixelType, MasksPixelType>::ImageReaderType::Pointer reader = this->CreateReader(GetImageFileName(validBandNames[0]));
+
+
         typename MACCSMetadataHelperBase<PixelType, MasksPixelType>::VectorImageType::Pointer img = reader->GetOutput();
+
         img->UpdateOutputInformation();
         int curRes = img->GetSpacing()[0];
         // if no resampling, just return the raster
+
         if (outRes == curRes) {
             return reader->GetOutput();
         }
@@ -62,20 +69,38 @@ typename MetadataHelper<PixelType, MasksPixelType>::VectorImageType::Pointer MAJ
     }
 
     // if we have several bands
+
+
     typename MetadataHelper<PixelType, MasksPixelType>::ImageListType::Pointer imageList = this->CreateImageList();
+
+
     for (const std::string &bandName: validBandNames) {
-        typename MetadataHelper<PixelType, MasksPixelType>::ImageReaderType::Pointer reader = this->CreateReader(GetImageFileName(bandName));
+
+
+	typename MetadataHelper<PixelType, MasksPixelType>::ImageReaderType::Pointer reader = this->CreateReader(GetImageFileName(bandName));
+
+        
+
+
         typename MetadataHelper<PixelType, MasksPixelType>::VectorImageType::Pointer img = reader->GetOutput();
+
         img->UpdateOutputInformation();
+
         int curRes = img->GetSpacing()[0];
+
         // for MAJA we have only one band per reflectance raster
         this->m_bandsExtractor.ExtractImageBands(img, imageList, {0}, Interpolator_NNeighbor, curRes, outRes);
     }
 
+
+
+
     imageList->UpdateOutputInformation();
 
     typename MACCSMetadataHelperBase<PixelType, MasksPixelType>::ListConcatenerFilterType::Pointer concat = this->CreateConcatenner();
+
     concat->SetInput(imageList);
+
     return concat->GetOutput();
 }
 
@@ -111,25 +136,15 @@ template <typename PixelType, typename MasksPixelType>
 bool MAJAMetadataHelper<PixelType, MasksPixelType>::LoadAndCheckMetadata(const std::string &file)
 {
 
-///AAAAAA
-std::cout<<"H1"<<std::endl;
-
     MAJAMetadataReaderType::Pointer majaMetadataReader = MAJAMetadataReaderType::New();
     // just check if the file is MACCS metadata file. In this case
     // the helper will return the hardcoded values from the constructor as these are not
     // present in the metadata
-///AAAAAA
-std::cout<<"H2"<<std::endl;
     if (this->m_metadata = majaMetadataReader->ReadMetadata(file)) {
-///AAAAAA
-std::cout<<"H2A"<<std::endl;
         if (this->m_metadata->Header.FixedHeader.Mission.find(SENTINEL_MISSION_STR) != std::string::npos &&
                 this->m_metadata->Header.FixedHeader.SourceSystem == "MUSCATE") {
-///AAAAAA
-std::cout<<"H3"<<std::endl;
             this->m_AotQuantifVal = std::stod(this->m_metadata->ImageInformation.AOTQuantificationValue);
             this->m_AotNoDataVal = std::stod(this->m_metadata->ImageInformation.AOTNoDataValue);
-
             return true;
         }
     }

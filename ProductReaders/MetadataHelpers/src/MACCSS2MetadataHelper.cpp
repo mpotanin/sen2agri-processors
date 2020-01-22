@@ -36,14 +36,10 @@ MACCSS2MetadataHelper<PixelType, MasksPixelType>::MACCSS2MetadataHelper()
 template <typename PixelType, typename MasksPixelType>
 bool MACCSS2MetadataHelper<PixelType, MasksPixelType>::LoadAndUpdateMetadataValues(const std::string &file)
 {
-///AAAAAA
-std::cout<<"F1"<<std::endl;
 
     if (!this->LoadAndCheckMetadata(file)) {
         return false;
     }
-///AAAAAA
-std::cout<<"F2"<<std::endl;
 
     // std::cout << "Using mission S2" << std::endl;
 
@@ -73,11 +69,7 @@ std::cout<<"F2"<<std::endl;
 template <typename PixelType, typename MasksPixelType>
 bool MACCSS2MetadataHelper<PixelType, MasksPixelType>::LoadAndCheckMetadata(const std::string &file)
 {
-///AAAAAA
-std::cout<<"G1"<<std::endl;
     MACCSMetadataReaderType::Pointer maccsMetadataReader = MACCSMetadataReaderType::New();
-///AAAAAA
-std::cout<<"G2"<<std::endl;
     // just check if the file is MACCS metadata file. In this case
     // the helper will return the hardcoded values from the constructor as these are not
     // present in the metadata
@@ -121,6 +113,7 @@ typename MetadataHelper<PixelType, MasksPixelType>::VectorImageType::Pointer MAC
             (*pRetRelBandIdxs) = retRelBandIdxs;
         }
 
+
         typename MACCSMetadataHelperBase<PixelType, MasksPixelType>::ImageReaderType::Pointer reader = this->CreateReader(getImageFileName(curRes));
         // if we have uniques band IDs and they are the same as the total number of bands, we just return the raster
         if (bandNames.size() == (size_t)nBandsNoForCurRes || bHasRetRelPtr) {
@@ -135,6 +128,7 @@ typename MetadataHelper<PixelType, MasksPixelType>::VectorImageType::Pointer MAC
         typename MACCSMetadataHelperBase<PixelType, MasksPixelType>::ImageListType::Pointer imageList = this->CreateImageList();
         this->m_bandsExtractor.ExtractImageBands(reader->GetOutput(), imageList,
                                            retRelBandIdxs, Interpolator_BCO);
+
 
         imageList->UpdateOutputInformation();
         typename MACCSMetadataHelperBase<PixelType, MasksPixelType>::ListConcatenerFilterType::Pointer concat = this->CreateConcatenner();
@@ -172,6 +166,7 @@ typename MetadataHelper<PixelType, MasksPixelType>::VectorImageType::Pointer MAC
         typename MACCSMetadataHelperBase<PixelType, MasksPixelType>::ImageListType::Pointer imageListFinal = this->CreateImageList();
         typename MACCSMetadataHelperBase<PixelType, MasksPixelType>::ListConcatenerFilterType::Pointer concat = this->CreateConcatenner();
         int i = 0;
+
         for (const std::string &bandName: bandNames) {
             // get the band in the resolutions map
             for (int curRes: this->m_vectResolutions) {
@@ -489,10 +484,12 @@ void MACCSS2MetadataHelper<PixelType, MasksPixelType>::InitializeS2Angles() {
     this->m_solarMeanAngles.azimuth = this->m_metadata->ProductInformation.MeanSunAngle.AzimuthValue;
     this->m_solarMeanAngles.zenith = this->m_metadata->ProductInformation.MeanSunAngle.ZenithValue;
 
+
     // first compute the total number of bands to add into this->m_sensorBandsMeanAngles
     unsigned int nMaxBandId = 0;
     std::vector<CommonMeanViewingIncidenceAngle> angles = this->m_metadata->ProductInformation.MeanViewingIncidenceAngles;
     bool bHasBandIds = true;
+
     for(unsigned int i = 0; i<angles.size(); i++) {
         if (!is_number(angles[i].BandId)) {
             bHasBandIds = false;
@@ -534,6 +531,7 @@ void MACCSS2MetadataHelper<PixelType, MasksPixelType>::InitializeS2Angles() {
 
         this->m_allDetectorsDetailedViewingAngles.push_back(mhGrid);
     }
+
     // extract the detailed viewing and solar angles
     this->m_maccsBandViewingAngles = ComputeViewingAngles(this->m_metadata->ProductInformation.ViewingAngles);
 

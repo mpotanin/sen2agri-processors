@@ -44,7 +44,7 @@ void CropMaskTrainImagesClassifier::DoInit()
     "Train a classifier from multiple pairs of images and training vector data.");
 
   // Documentation
-  SetDocName("Train a classifier from multiple images");
+  //SetDocName("Train a classifier from multiple images");
   SetDocLongDescription(
     "This application performs a classifier training from multiple pairs of input images and training vector data. "
     "Samples are composed of pixel values in each band optionally centered and reduced using an XML statistics file produced by "
@@ -113,7 +113,7 @@ void CropMaskTrainImagesClassifier::DoInit()
   AddParameter(ParameterType_Int, "window", "The number of dates in the temporal window");
   SetDefaultParameterInt("window", 2);
 
-  AddParameter(ParameterType_Empty,
+  AddParameter(ParameterType_Bool,
                "bm",
                "If set use the features from Benchmarking instead of the features from ATBD");
   MandatoryOff("bm");
@@ -126,7 +126,7 @@ void CropMaskTrainImagesClassifier::DoInit()
   AddParameter(ParameterType_String, "mission", "The main raster series that will be used. By default SPOT is used");
   MandatoryOff("mission");
 
-  AddParameter(ParameterType_Empty, "rededge", "Include Sentinel-2 vegetation red edge bands");
+  AddParameter(ParameterType_Bool, "rededge", "Include Sentinel-2 vegetation red edge bands");
   MandatoryOff("rededge");
 
   //LBU
@@ -153,7 +153,7 @@ void CropMaskTrainImagesClassifier::DoInit()
   SetParameterDescription("sample.bm", "Bound the number of samples for each class by the number of available samples by the smaller class. Proportions between training and validation are respected. Default is true (=1).");
 
 
-  AddParameter(ParameterType_Empty, "sample.edg", "On edge pixel inclusion");
+  AddParameter(ParameterType_Bool, "sample.edg", "On edge pixel inclusion");
   SetParameterDescription("sample.edg",
                           "Takes pixels on polygon edge into consideration when building training and validation samples.");
   MandatoryOff("sample.edg");
@@ -276,14 +276,10 @@ void CropMaskTrainImagesClassifier::DoExecute()
     itkExceptionMacro("The number of descriptors (" << descriptors.size() << ") is not consistent with the sum of products per tile (" << numDesc << ")")
     }
 
-//AAAA
-	std::cout<<"A3"<<std::endl;
-
   auto preprocessors = CropMaskPreprocessingList::New();
-  auto bm = GetParameterEmpty("bm");
+  //auto bm = GetParameterEmpty("bm");
   auto window = GetParameterInt("window");
-//AAAA
-	std::cout<<"A4"<<std::endl;
+
   // Loop through the sets of products
   int startIndex = 0;
   int endIndex;
@@ -298,30 +294,20 @@ void CropMaskTrainImagesClassifier::DoExecute()
       preprocessor->SetPixelSize(pixSize);
       preprocessor->SetMission(mission);
 
-//AAAA
-	std::cout<<"A5"<<std::endl;
-
-      if (GetParameterEmpty("rededge")) {
+      if (IsParameterEnabled("rededge")) {
           preprocessor->SetIncludeRedEdge(true);
       }
 
-//AAAA
-	std::cout<<"A6"<<std::endl;
-      preprocessor->SetBM(bm);
+      preprocessor->SetBM(false);
       preprocessor->SetW(window);
       preprocessor->SetDelta(0.05f);
       preprocessor->SetTSoil(0.2f);
 
       // compute the desired size of the processed rasters
-//AAAA
-	std::cout<<"A7"<<std::endl;
+
 
       preprocessor->updateRequiredImageSize(descriptors, startIndex, endIndex, td);
-//AAAA
-	std::cout<<"A8"<<std::endl;
       preprocessor->Build(descriptors.begin() + startIndex, descriptors.begin() + endIndex, td);
-//AAAA
-	std::cout<<"A9"<<std::endl;
 
     startIndex = endIndex;
   }
@@ -417,10 +403,11 @@ void CropMaskTrainImagesClassifier::DoExecute()
       "sample.vfn"
   };
 
+
   for (const auto &key : booleanParams) {
       if (HasValue(key)) {
           app->EnableParameter(key);
-          app->SetParameterEmpty(key, GetParameterEmpty(key));
+          //app->SetParameterEmpty(key, GetParameterEmpty(key));
       }
   }
 
@@ -486,7 +473,7 @@ void CropMaskTrainImagesClassifier::DoExecute()
     SetParameterDescription(
         "classifier.libsvm.c",
         "SVM models have a cost parameter C (1 by default) to control the trade-off between training errors and forcing rigid margins.");
-    AddParameter(ParameterType_Empty, "classifier.libsvm.opt", "Parameters optimization");
+    AddParameter(ParameterType_Bool, "classifier.libsvm.opt", "Parameters optimization");
     MandatoryOff("classifier.libsvm.opt");
     SetParameterDescription("classifier.libsvm.opt", "SVM parameters optimization flag.");
   }
@@ -567,7 +554,7 @@ void CropMaskTrainImagesClassifier::DoExecute()
     AddParameter(ParameterType_Float, "classifier.svm.degree", "Parameter degree of a kernel function (POLY)");
     SetParameterFloat("classifier.svm.degree", 1.0);
     SetParameterDescription("classifier.svm.degree", "Parameter degree of a kernel function (POLY).");
-    AddParameter(ParameterType_Empty, "classifier.svm.opt", "Parameters optimization");
+    AddParameter(ParameterType_Bool, "classifier.svm.opt", "Parameters optimization");
     MandatoryOff("classifier.svm.opt");
     SetParameterDescription("classifier.svm.opt", "SVM parameters optimization flag.\n-If set to True, then the optimal SVM parameters will be estimated. "
                             "Parameters are considered optimal by OpenCV when the cross-validation estimate of the test set error is minimal. "
@@ -606,7 +593,7 @@ void CropMaskTrainImagesClassifier::DoExecute()
                             "then the node will not be split.");
 
     //UseSurrogates : don't need to be exposed !
-    //AddParameter(ParameterType_Empty, "classifier.dt.sur", "Surrogate splits will be built");
+    //AddParameter(ParameterType_Bool, "classifier.dt.sur", "Surrogate splits will be built");
     //SetParameterDescription("classifier.dt.sur","These splits allow to work with missing data and compute variable importance correctly.");
 
     //MaxCategories
@@ -624,13 +611,13 @@ void CropMaskTrainImagesClassifier::DoExecute()
         "classifier.dt.f", "If cv_folds > 1, then it prunes a tree with K-fold cross-validation where K is equal to cv_folds.");
 
     //Use1seRule
-    AddParameter(ParameterType_Empty, "classifier.dt.r", "Set Use1seRule flag to false");
+    AddParameter(ParameterType_Bool, "classifier.dt.r", "Set Use1seRule flag to false");
     SetParameterDescription(
         "classifier.dt.r",
         "If true, then a pruning will be harsher. This will make a tree more compact and more resistant to the training data noise but a bit less accurate.");
 
     //TruncatePrunedTree
-    AddParameter(ParameterType_Empty, "classifier.dt.t", "Set TruncatePrunedTree flag to false");
+    AddParameter(ParameterType_Bool, "classifier.dt.t", "Set TruncatePrunedTree flag to false");
     SetParameterDescription("classifier.dt.t", "If true, then pruned branches are physically removed from the tree.");
 
     //Priors are not exposed.
@@ -677,7 +664,7 @@ void CropMaskTrainImagesClassifier::DoExecute()
           "if the tree is pruned.");
 
     //UseSurrogates : don't need to be exposed !
-    //AddParameter(ParameterType_Empty, "classifier.gbt.sur", "Surrogate splits will be built");
+    //AddParameter(ParameterType_Bool, "classifier.gbt.sur", "Surrogate splits will be built");
     //SetParameterDescription("classifier.gbt.sur","These splits allow to work with missing data and compute variable importance correctly.");
 
   }
@@ -815,7 +802,7 @@ void CropMaskTrainImagesClassifier::DoExecute()
                             "then the node will not be split.");
 
     //UseSurrogates : don't need to be exposed !
-    //AddParameter(ParameterType_Empty, "classifier.rf.sur", "Surrogate splits will be built");
+    //AddParameter(ParameterType_Bool, "classifier.rf.sur", "Surrogate splits will be built");
     //SetParameterDescription("classifier.rf.sur","These splits allow to work with missing data and compute variable importance correctly.");
 
     //MaxNumberOfCategories

@@ -54,7 +54,7 @@ private:
         SetDescription("Split the reference data into 2 disjoint sets, the training set and the "
                        "validation set.");
 
-        SetDocName("SampleSelectionAgri");
+        //SetDocName("SampleSelectionAgri");
         SetDocLongDescription(
             "The sample selection consists in splitting the reference data into 2 disjoint sets, "
             "the training set and the validation set. "
@@ -77,7 +77,7 @@ private:
         AddParameter(ParameterType_Float, "ratio", "Sample Ratio");
         AddParameter(ParameterType_Int, "seed", "Seed for the random number generation");
         AddParameter(
-            ParameterType_Empty, "nofilter", "Do not filter the polygons based on Crop/No crop");
+            ParameterType_Bool, "nofilter", "Do not filter the polygons based on Crop/No crop");
         MandatoryOff("nofilter");
 
         AddParameter(ParameterType_OutputFilename, "tp", "Training Polygons");
@@ -135,7 +135,9 @@ private:
         if (sourceLayer.GetGeomType() != wkbPolygon) {
             itkExceptionMacro("The first layer must contain polygons!");
         }
-        auto filter = !GetParameterEmpty("nofilter");
+        //auto filter = !GetParameterEmpty("nofilter");
+        bool filter = !IsParameterEnabled("nofilter");
+        
         if (filter) {
             std::cout << "Excluding non-crop features\n";
             auto ret = sourceLayer.ogr().SetAttributeFilter("CROP=1");

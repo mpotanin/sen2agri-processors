@@ -688,7 +688,7 @@ class ProcessorBase(object):
     def compute_quality_flags(self, tile):
         tile_quality_flags = self.get_output_path("status_flags_{}.tif", tile.id)
 
-        step_args = ["otbcli", "QualityFlagsExtractor", self.args.buildfolder,
+        step_args = ["otbcli_QualityFlagsExtractor",
                      "-progress", "false",
                      "-mission", self.args.mission.name,
                      "-out", format_otb_filename(tile_quality_flags, compression='DEFLATE'),

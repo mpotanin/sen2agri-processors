@@ -284,6 +284,8 @@ private:
       m_Preprocessor->SetMission(mission);
       //if (GetParameterEmpty("rededge")) {
       if (IsParameterEnabled("rededge")) {
+//AAAAAAA
+std::cout<<"rededge=true"<<std::endl;
           m_Preprocessor->SetIncludeRedEdge(true);
       }
 
@@ -402,6 +404,7 @@ private:
         }
 
       SetParameterOutputImage<OutputImageType>("out", m_ClassificationFilter->GetOutput());
+
   }
 
   //  Software Guide :EndCodeSnippet

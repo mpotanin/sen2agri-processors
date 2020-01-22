@@ -20,6 +20,19 @@
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
 
+bool FileExists____(std::string name)
+{
+
+
+    if (FILE *file = fopen(name.c_str(), "r")) {
+        fclose(file);
+        return true;
+    } else {
+        return false;
+    }   
+
+}
+
 template <typename PixelType, typename MasksPixelType>
 MACCSMetadataHelperBase<PixelType, MasksPixelType>::MACCSMetadataHelperBase()
 {
@@ -29,9 +42,9 @@ MACCSMetadataHelperBase<PixelType, MasksPixelType>::MACCSMetadataHelperBase()
 template <typename PixelType, typename MasksPixelType>
 bool MACCSMetadataHelperBase<PixelType, MasksPixelType>::DoLoadMetadata(const std::string &file)
 {
-
     if (LoadAndUpdateMetadataValues(file))
     {
+
         this->m_Mission = this->m_metadata->Header.FixedHeader.Mission;
         // Transform names like SENTINEL-2A to SENTINEL2A
         this->m_Mission.erase(std::remove(this->m_Mission.begin(), this->m_Mission.end(), '-'), this->m_Mission.end());
@@ -90,13 +103,17 @@ std::string MACCSMetadataHelperBase<PixelType, MasksPixelType>::getMACCSImageFil
 template <typename PixelType, typename MasksPixelType>
 bool MACCSMetadataHelperBase<PixelType, MasksPixelType>::getMACCSImageFileName(const CommonFileInformation& fileInfo,
                                                        const std::string& ending, std::string& retStr) {
+
     if (fileInfo.LogicalName.length() >= ending.length() &&
             0 == fileInfo.LogicalName.compare (fileInfo.LogicalName.length() - ending.length(), ending.length(), ending)) {
         boost::filesystem::path rootFolder(this->m_DirName);
+
         // Get the extension of file (default for MACCS is ".DBL.TIF" and for MAJA is ".TIF")
         const std::string &ext = this->GetMaccsImageExtension();
         retStr = (rootFolder / (fileInfo.FileLocation.substr(0, fileInfo.FileLocation.find_last_of('.')) + ext)).string();
+        //retStr = this->m_DirName + "/" + fileInfo.FileLocation.substr(0, fileInfo.FileLocation.find_last_of('.')) + ext;
         if(!CheckFileExistence(retStr)) {
+        //if (!FileExists____(retStr)) {
             itkWarningMacro("Cannot find the file (even with lowercase extension): " << retStr);
         }
         return true;
@@ -152,7 +169,9 @@ bool MACCSMetadataHelperBase<PixelType, MasksPixelType>::getMACCSImageHdrName(co
 template <typename PixelType, typename MasksPixelType>
 bool MACCSMetadataHelperBase<PixelType, MasksPixelType>::CheckFileExistence(std::string &fileName) {
     bool ret = true;
+
     boost::system::error_code ec;
+
     if (!boost::filesystem::exists(fileName, ec)) {
         size_t lastindex = fileName.find_last_of(".");
         if((lastindex != std::string::npos) && (lastindex != (fileName.length()-1))) {
@@ -161,7 +180,7 @@ bool MACCSMetadataHelperBase<PixelType, MasksPixelType>::CheckFileExistence(std:
             std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
             std::string recomputedName = rawname + "." + ext;
             if (boost::filesystem::exists(recomputedName, ec)) {
-                fileName = recomputedName;
+                 fileName = recomputedName;
             } else {
                 ret = false;
             }

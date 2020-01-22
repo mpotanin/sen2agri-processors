@@ -31,20 +31,13 @@ std::unique_ptr<MetadataHelper<PixelType, MasksPixelType>> MetadataHelperFactory
 
     std::unique_ptr<MetadataHelper<PixelType, MasksPixelType>> majaMetadataHelper(new MAJAMetadataHelper<PixelType, MasksPixelType>);
 
-//AAAAAA
-std::cout<<"C1"<<std::endl;
     if (majaMetadataHelper->LoadMetadataFile(metadataFileName))
+    {
         return majaMetadataHelper;
-//AAAAAA
-std::cout<<"C2"<<std::endl;
-
+    }
     std::unique_ptr<MetadataHelper<PixelType, MasksPixelType>> maccsS2MetadataHelper(new MACCSS2MetadataHelper<PixelType, MasksPixelType>);
-//AAAAAA
-std::cout<<"C3"<<std::endl;
     if (maccsS2MetadataHelper->LoadMetadataFile(metadataFileName))
         return maccsS2MetadataHelper;
-//AAAAAA
-std::cout<<"C4"<<std::endl;
 
     std::unique_ptr<MetadataHelper<PixelType, MasksPixelType>> maccsL8MetadataHelper(new MACCSL8MetadataHelper<PixelType, MasksPixelType>);
     if (maccsL8MetadataHelper->LoadMetadataFile(metadataFileName))

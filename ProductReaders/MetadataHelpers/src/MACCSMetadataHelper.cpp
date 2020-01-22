@@ -20,15 +20,18 @@
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
 
-bool FileExists(std::string name) {
+bool FileExists___(std::string name)
+{
+
+
     if (FILE *file = fopen(name.c_str(), "r")) {
         fclose(file);
         return true;
     } else {
         return false;
     }   
-}
 
+}
 
 MACCSMetadataHelper::MACCSMetadataHelper()
 {
@@ -141,8 +144,6 @@ int MACCSMetadataHelper::GetAotBandIndex()
 
 bool MACCSMetadataHelper::DoLoadMetadata()
 {
-//AAAAA
-std::cout<<"MACCSMetadataHelper::DoLoadMetadata()"<<std::endl;
     m_fAotQuantificationValue = 0.0;
     m_fAotNoDataVal = 0;
     m_nAotBandIndex = -1;
@@ -428,9 +429,8 @@ bool MACCSMetadataHelper::getMACCSImageFileName(const CommonFileInformation& fil
                                                        const std::string& ending, std::string& retStr) {
     if (fileInfo.LogicalName.length() >= ending.length() &&
             0 == fileInfo.LogicalName.compare (fileInfo.LogicalName.length() - ending.length(), ending.length(), ending)) {
-        //boost::filesystem::path rootFolder(m_DirName);
-        //retStr = (rootFolder / (fileInfo.FileLocation.substr(0, fileInfo.FileLocation.find_last_of('.')) + ".DBL.TIF")).string();
-        retStr = m_DirName + "/" + fileInfo.FileLocation.substr(0, fileInfo.FileLocation.find_last_of('.')) + ".DBL.TIF";
+        boost::filesystem::path rootFolder(m_DirName);
+        retStr = (rootFolder / (fileInfo.FileLocation.substr(0, fileInfo.FileLocation.find_last_of('.')) + ".DBL.TIF")).string();
         if(!CheckFileExistence(retStr)) {
             itkWarningMacro("Cannot find the file (even with lowercase extension): " << retStr);
         }
@@ -484,18 +484,16 @@ bool MACCSMetadataHelper::getMACCSImageHdrName(const CommonFileInformation& file
 bool MACCSMetadataHelper::CheckFileExistence(std::string &fileName) {
     bool ret = true;
 
-    //boost::system::error_code ec;
-    //if (!boost::filesystem::exists(fileName, ec)) {
-    if (FileExists(fileName)) {
+    boost::system::error_code ec;
+    if (!boost::filesystem::exists(fileName, ec)) {
         size_t lastindex = fileName.find_last_of(".");
         if((lastindex != std::string::npos) && (lastindex != (fileName.length()-1))) {
             std::string rawname = fileName.substr(0, lastindex);
             std::string ext = fileName.substr(lastindex+1);
             std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
             std::string recomputedName = rawname + "." + ext;
-            //if (boost::filesystem::exists(recomputedName, ec)) {
-            if (FileExists(recomputeName)) {
-                fileName = recomputedName;
+            if (boost::filesystem::exists(recomputedName, ec)) {
+               fileName = recomputedName;
             } else {
                 ret = false;
             }

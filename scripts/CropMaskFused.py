@@ -131,7 +131,7 @@ class CropMaskProcessor(ProcessorBase):
                                                  "-in", tile_reference,
                                                  "-out", tile_reference_eroded]))
 
-            step_args = ["otbcli", "SpectralFeaturesExtraction", self.args.buildfolder,
+            step_args = ["otbcli_SpectralFeaturesExtraction",
                                    "-progress", "false",
                                    "-mission", self.args.mission.name,
                                    "-pixsize", self.args.pixsize,
@@ -150,7 +150,7 @@ class CropMaskProcessor(ProcessorBase):
             tile_reference_trimmed_full = self.get_output_path("reference-trimmed-full-{}.tif", tile.id)
             tile_reference_trimmed = self.get_output_path("reference-trimmed-{}.tif", tile.id)
 
-            step_args = ["otbcli", "Trimming", self.args.buildfolder,
+            step_args = ["otbcli_Trimming",
                                    "-progress", "false",
                                    "-alpha", self.args.alpha,
                                    "-nbsamples", 0,
@@ -194,14 +194,14 @@ class CropMaskProcessor(ProcessorBase):
                 area_descriptors += tile.get_descriptor_paths()
                 area_prodpertile.append(len(tile.descriptors))
 
-            run_step(Step("SampleSelection", ["otbcli", "SampleSelectionAgri", self.args.buildfolder,
+            run_step(Step("SampleSelectionAgri", ["otbcli_SampleSelectionAgri",
                                               "-ref", features_shapefile,
                                               "-ratio", self.args.ratio,
                                               "-seed", self.args.rseed,
                                               "-nofilter", "true",
                                               "-tp", area_training_polygons,
                                               "-vp", area_validation_polygons]))
-            step_args = ["otbcli", "CropMaskTrainImagesClassifier", self.args.buildfolder,
+            step_args = ["otbcli_CropMaskTrainImagesClassifier",
                          "-progress", "false",
                          "-mission", self.args.mission.name,
                          "-nodatalabel", -10000,
@@ -278,7 +278,7 @@ class CropMaskProcessor(ProcessorBase):
                              "-out", area_statistics,
                              "-il"] + files
 
-            step_args = ["otbcli", "TrainImagesClassifierNew", self.args.buildfolder,
+            step_args = ["otbcli_TrainImagesClassifierNew",
                          "-nodatalabel", -10000,
                          "-rand", self.args.rseed,
                          "-sample.bm", 0,
@@ -346,7 +346,7 @@ class CropMaskProcessor(ProcessorBase):
         tile_crop_mask_uncompressed = self.get_output_path("crop_mask_map_{}_uncompressed.tif", tile.id)
 
         if self.args.refp is not None:
-            step_args = ["otbcli", "CropMaskImageClassifier", self.args.buildfolder,
+            step_args = ["otbcli_CropMaskImageClassifier",
                          "-progress", "false",
                          "-mission", self.args.mission.name,
                          "-pixsize", self.args.pixsize,
@@ -367,7 +367,7 @@ class CropMaskProcessor(ProcessorBase):
         else:
             tile_spectral_features = self.get_output_path("spectral-features-{}.tif", tile.id)
 
-            step_args = ["otbcli", "MultiModelImageClassifier", self.args.buildfolder,
+            step_args = ["otbcli_MultiModelImageClassifier",
                          "-progress", "false",
                          "-in", tile_spectral_features,
                          "-out", tile_crop_mask_uncompressed]
@@ -434,7 +434,7 @@ class CropMaskProcessor(ProcessorBase):
         else:
             tile_descriptors = tile.get_descriptor_paths()
 
-        step_args = ["otbcli", "NDVISeries", self.args.buildfolder,
+        step_args = ["otbcli_NDVISeries",
                      "-progress", "false",
                      "-mission", self.args.mission.name,
                      "-pixsize", self.args.pixsize,
@@ -453,7 +453,7 @@ class CropMaskProcessor(ProcessorBase):
         else:
             run_step(Step("NDVI Series " + tile.id, step_args))
 
-        step_args = ["otbcli", "PrincipalComponentAnalysis", self.args.buildfolder,
+        step_args = ["otbcli_PrincipalComponentAnalysis",
                      "-progress", "false",
                      "-nbcomp", self.args.nbcomp,
                      "-bv", -10000,
@@ -522,7 +522,7 @@ class CropMaskProcessor(ProcessorBase):
                 os.remove(tile_smoothed_spatial)
                 os.remove(tile_segmentation)
 
-        step_args = ["otbcli", "MajorityVoting", self.args.buildfolder,
+        step_args = ["otbcli_MajorityVoting",
                      "-progress", "false",
                      "-nodatasegvalue", 0,
                      "-nodataclassifvalue", -10000,
@@ -550,7 +550,7 @@ class CropMaskProcessor(ProcessorBase):
                 area_quality_metrics = self.get_output_path("quality-metrics-{}.txt", stratum.id)
                 area_validation_metrics_xml = self.get_output_path("validation-metrics-{}.xml", stratum.id)
 
-                step_args = ["otbcli", "ComputeConfusionMatrixMulti", self.args.buildfolder,
+                step_args = ["otbcli_ComputeConfusionMatrixMulti",
                             "-out", area_statistics,
                             "-nodatalabel", -10000,
                             "-il"]
@@ -574,7 +574,7 @@ class CropMaskProcessor(ProcessorBase):
                 run_step(Step("ComputeConfusionMatrix_" + str(stratum.id),
                             step_args, out_file=area_quality_metrics))
 
-                step_args = ["otbcli", "XMLStatistics", self.args.buildfolder,
+                step_args = ["otbcli_XMLStatistics",
                             "-root", "CropMask",
                             "-confmat", area_statistics,
                             "-quality", area_quality_metrics,
@@ -588,7 +588,7 @@ class CropMaskProcessor(ProcessorBase):
                     global_statistics = self.get_output_path("confusion-matrix-validation-global.csv")
                     global_quality_metrics = self.get_output_path("quality-metrics-global.txt")
 
-                    step_args = ["otbcli", "ComputeConfusionMatrixMulti", self.args.buildfolder,
+                    step_args = ["otbcli_ComputeConfusionMatrixMulti",
                                 "-out", global_statistics,
                                 "-nodatalabel", -10000,
                                 "-il"]
@@ -627,7 +627,7 @@ class CropMaskProcessor(ProcessorBase):
                     run_step(Step("ComputeConfusionMatrix_Global",
                                 step_args, out_file=global_quality_metrics))
 
-                    step_args = ["otbcli", "XMLStatistics", self.args.buildfolder,
+                    step_args = ["otbcli_XMLStatistics",
                                 "-root", "CropMask",
                                 "-confmat", global_statistics,
                                 "-quality", global_quality_metrics,
@@ -638,7 +638,7 @@ class CropMaskProcessor(ProcessorBase):
 
                     shutil.copyfile(area_validation_metrics_xml, global_validation_metrics_xml)
 
-        step_args = ["otbcli", "ProductFormatter", self.args.buildfolder,
+        step_args = ["otbcli_ProductFormatter",
                      "-destroot", self.args.targetfolder,
                      "-fileclass", "SVT1",
                      "-level", "L4A",

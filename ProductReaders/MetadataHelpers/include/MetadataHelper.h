@@ -63,6 +63,8 @@ struct MetadataHelperViewingAnglesGrid
 
 typedef enum {MSK_CLOUD=1, MSK_SNOW=2, MSK_WATER=4, MSK_SAT=8, MSK_VALID=16, ALL=0x1F} MasksFlagType;
 
+
+
 template <typename PixelType, typename MasksPixelType=short>
 class MetadataHelper
 {
@@ -186,11 +188,21 @@ protected:
     std::string buildFullPath(const std::string& fileName);
 
     typename MetadataHelper<PixelType, MasksPixelType>::ImageReaderType::Pointer CreateReader(const std::string &imgPath) {
+
+
        typename MetadataHelper<PixelType, MasksPixelType>::ImageReaderType::Pointer reader =
                MetadataHelper<PixelType, MasksPixelType>::ImageReaderType::New();
+
+
        reader->SetFileName(imgPath);
+
+
+
        reader->UpdateOutputInformation();
+
+
        this->m_readers.push_back(reader);
+
        return reader;
    }
 

@@ -31,19 +31,13 @@ namespace itk
 
 std::unique_ptr<MACCSFileMetadata> MAJAMetadataReader::ReadMetadata(const std::string &path)
 {
-//AAAAA
-std::cout<<"ReadMetadata"<<std::endl;
-
     TiXmlDocument doc(path);
     if (!doc.LoadFile()) {
         return nullptr;
     }
-//AAAAA
-std::cout<<"ReadMetadata2"<<std::endl;
 
     auto metadata = ReadMetadataXml(doc);
-//AAAAA
-std::cout<<"ReadMetadata3"<<std::endl;
+
     if (metadata) {
         metadata->ProductPath = path;
     }
@@ -450,7 +444,6 @@ std::unique_ptr<MACCSFileMetadata> ConvertToMACCSStructure(std::unique_ptr<MAJAF
     if (!fileMaja) {
         return nullptr;
     }
-
     std::unique_ptr<MACCSFileMetadata> fileRetMACCS = std::unique_ptr<MACCSFileMetadata>(new MACCSFileMetadata);
     fileRetMACCS->Header.FixedHeader.Mission = std::move(fileMaja->ProductCharacteristics.Mission);
     fileRetMACCS->Header.FixedHeader.SourceSystem = std::move(fileMaja->DatasetIdentification.Producer);
@@ -479,14 +472,13 @@ std::unique_ptr<MACCSFileMetadata> ConvertToMACCSStructure(std::unique_ptr<MAJAF
     fileRetMACCS->ProductInformation.MeanSunAngle = std::move(fileMaja->GeometricInformation.MeanSunAngle);
     fileRetMACCS->ProductInformation.ViewingAngles = std::move(fileMaja->GeometricInformation.ViewingAngles);
     fileRetMACCS->ProductInformation.SolarAngles = std::move(fileMaja->GeometricInformation.SolarAngles);
+
+
     return fileRetMACCS;
 }
 
 std::unique_ptr<MACCSFileMetadata> MAJAMetadataReader::ReadMetadataXml(const TiXmlDocument &doc)
 {
-//AAAAA
-std::cout<<"ReadMetadataXml"<<std::endl;
-
 
     TiXmlHandle hDoc(const_cast<TiXmlDocument *>(&doc));
 
@@ -494,28 +486,21 @@ std::cout<<"ReadMetadataXml"<<std::endl;
     // http://sourceforge.net/p/tinyxml/patches/37/
     // Our files start with one, but we can't read it in.
     auto rootElement = hDoc.FirstChildElement("Muscate_Metadata_Document").ToElement();
-//AAAAA
-std::cout<<"ReadMetadataXml-2"<<std::endl;
 
     if (!rootElement) {
         return nullptr;
     }
 
     std::unique_ptr<MAJAFileMetadata> file = std::unique_ptr<MAJAFileMetadata>(new MAJAFileMetadata);
-//AAAAA
-std::cout<<"ReadMetadataXml-3"<<std::endl;
 
     file->MetadataIdentification = ReadMAJAMetadataIdentification(rootElement->FirstChildElement("Metadata_Identification"));
     file->DatasetIdentification = ReadMAJADatasetIdentification(rootElement->FirstChildElement("Dataset_Identification"));
     file->ProductCharacteristics = ReadMAJAProductCharacteristics(rootElement->FirstChildElement("Product_Characteristics"), rootElement->FirstChildElement("Geoposition_Informations"));
-//AAAAA
-std::cout<<"ReadMetadataXml-4"<<std::endl;
     file->ProductOrganization = ReadMAJAProductOrganization(rootElement->FirstChildElement("Product_Organisation"));
 
     file->GeometricInformation = ReadMAJAGeometricInformation(rootElement->FirstChildElement("Geometric_Informations"));
 
     file->RadiometricInformation = ReadMAJARadiometricInformation(rootElement->FirstChildElement("Radiometric_Informations"));
-
     return ConvertToMACCSStructure(file);
 }
 }
