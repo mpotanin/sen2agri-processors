@@ -1,0 +1,2 @@
+C:/work/cpp/vstudio_projects/sen2agri-processors/ProductFormatters/ProductMetaWriters/src/Sen2AgriPrdMetaWriters.dir/Debug/ProductMetadataWriter.obj
+C:/work/cpp/vstudio_projects/sen2agri-processors/ProductFormatters/ProductMetaWriters/src/Sen2AgriPrdMetaWriters.dir/Debug/TileMetadataWriter.obj
