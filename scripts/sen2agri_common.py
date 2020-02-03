@@ -768,8 +768,17 @@ class ProcessorBase(object):
            
             #end-debug
 
+<<<<<<< HEAD
 =======
 >>>>>>> Stashed changes
+=======
+            #debug
+            list_map4 = list(tile.descriptors)
+            #list_map = list(build_descriptor_list(main_mission, products))
+           
+            #end-debug
+
+>>>>>>> 08c663a... first run with OTB 7.0 done
             if self.args.tile_filter is None or tile_id in self.args.tile_filter:
                 self.tiles.append(tile)
             #debug

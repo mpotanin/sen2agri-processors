@@ -25,7 +25,7 @@
 #include <random>
 #include <unordered_map>
 
-//#include <boost/filesystem.hpp>
+#include "boost/filesystem.hpp"
 
 #include "otbWrapperApplication.h"
 #include "otbWrapperApplicationFactory.h"
