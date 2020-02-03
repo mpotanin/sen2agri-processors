@@ -43,7 +43,8 @@
 #include <string>
 #include <map>
 
-#include <boost/filesystem.hpp>
+//#include <boost/filesystem.hpp>
+#include "boost/date_time/posix_time/posix_time.hpp"
 #include "MetadataHelper.h"
 
 typedef otb::VectorImage<float, 2>                                 ImageType;

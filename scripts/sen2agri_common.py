@@ -12,11 +12,13 @@ import re
 import sys
 import zipfile
 import pipes
-import resource
+#import resource
 import subprocess
 import traceback
 import datetime
 import multiprocessing.dummy
+import platform
+import copy
 
 # name:      The name of the step as it will be dispayed on screen
 # args:      The external process that must be invoked and it arguments
@@ -50,21 +52,29 @@ def executeStep(name, *args, **kwargs):
         # Print start message
         print("Executing " + name + " at " + str(startTime))
 
-        # Build the command line and print it to the output
         args = map(str, args)
-        cmdLine = " ".join(map(pipes.quote, args))
-        if len(outf):
-            cmdLine = cmdLine + " > " + pipes.quote(outf)
-        print(cmdLine)
+        
+        if platform.system().lower() == 'windows':
+            cmdLine = " ".join(map(str, args))
+            if len(outf):
+                cmdLine = cmdLine + " > " + outf
+            print (cmdLine)
+            result = os.system(cmdLine)
+        else :
+            cmdLine = " ".join(map(pipes.quote, args))
+            if len(outf):
+                cmdLine = cmdLine + " > " + pipes.quote(outf)
+            
+            # invoke the external process
+        
+            if len(outf):
+                fil = open(outf, "w")
+                result = subprocess.call(args, stdout=fil)
+            else:
+                result = subprocess.call(args)
 
-        # invoke the external process
-        if len(outf):
-            fil = open(outf, "w")
-            result = subprocess.call(args, stdout=fil)
-        else:
-            result = subprocess.call(args)
-
-        # Get the end time
+            # Get the end time
+        
         endTime = datetime.datetime.now()
 
         # Check for errors
@@ -85,6 +95,7 @@ def executeStep(name, *args, **kwargs):
 
 
 def increase_rlimits():
+    """
     try:
         nofiles = resource.getrlimit(resource.RLIMIT_NOFILE)
         if nofiles[0] < nofiles[1]:
@@ -94,6 +105,7 @@ def increase_rlimits():
             print("NOFILE limit is set to {}".format(nofiles[0]))
     except:
         traceback.print_exc()
+        """
 
 
 def expand_file_list(files):
@@ -209,26 +221,32 @@ class Stratum(object):
         self.tiles = []
 
 
-class Descriptor(object):
+#class Descriptor(object):
+class Descriptor:
 
     def __init__(self, path, mission):
         self.path = path
         self.mission = mission
 
 
-class Tile(object):
+#class Tile(object):
+class Tile:
 
     def __init__(self, id, footprint, footprint_wgs84, projection, descriptors, reference_raster):
         self.id = id
         self.footprint = footprint
         self.footprint_wgs84 = footprint_wgs84
         self.projection = projection
-        self.descriptors = descriptors
+        #self.descriptors = descriptors
+        self.descriptors = [d for d in descriptors]
+
         self.reference_raster = reference_raster
         self.strata = []
 
+
     def get_descriptor_paths(self):
-        return map(lambda d: d.path, self.descriptors)
+        #return map(lambda d: d.path, self.descriptors)
+        return [d.path for d in self.descriptors]
 
     def get_mission_descriptor_paths(self, mission):
         return [d.path for d in self.descriptors if d.mission == mission]
@@ -294,7 +312,7 @@ def prepare_lut(data, lut):
         lut_entries.append((-10000, 255, 255, 255, "No crop/No data"))
 
     available_colors = []
-    for code, lc in in_codes.iteritems():
+    for code, lc in in_codes.items():
         e = default_lut_map.pop(code, None)
         if e is not None:
             entry = (code, e[0], e[1], e[2], lc)
@@ -352,7 +370,7 @@ def split_features(stratum, data, out_folder):
                                    geom_type=ogr.wkbMultiPolygon)
     out_layer_def = out_layer.GetLayerDefn()
 
-    for i in xrange(data_layer_def.GetFieldCount()):
+    for i in range(data_layer_def.GetFieldCount()):
         out_layer.CreateField(data_layer_def.GetFieldDefn(i))
 
     wgs84_srs = osr.SpatialReference()
@@ -371,7 +389,7 @@ def split_features(stratum, data, out_folder):
         out_feature = ogr.Feature(out_layer_def)
         out_features += 1
 
-        for i in xrange(out_layer_def.GetFieldCount()):
+        for i in range(out_layer_def.GetFieldCount()):
             out_feature.SetField(out_layer_def.GetFieldDefn(
                 i).GetNameRef(), region.GetField(i))
 
@@ -545,6 +563,7 @@ class ProcessorBase(object):
             context = self.create_context()
 
             self.load_tiles()
+
 
             metadata_file = self.get_metadata_file()
 
@@ -733,7 +752,8 @@ class ProcessorBase(object):
         print("Main mission: {}".format(main_mission.name))
 
         self.tiles = []
-        for (tile_id, products) in mission_products[main_mission].iteritems():
+        #print(mission_products[main_mission])
+        for (tile_id, products) in mission_products[main_mission].items():
             raster = get_reference_raster(products[0])
             (tile_footprint, tile_footprint_wgs84,
              tile_projection) = get_raster_footprint(raster)
@@ -741,12 +761,24 @@ class ProcessorBase(object):
             tile = Tile(tile_id, tile_footprint, tile_footprint_wgs84,
                         tile_projection, build_descriptor_list(main_mission, products), raster)
 
+            #debug
+            list_map4 = list(tile.descriptors)
+            #list_map = list(build_descriptor_list(main_mission, products))
+           
+            #end-debug
+
             if self.args.tile_filter is None or tile_id in self.args.tile_filter:
                 self.tiles.append(tile)
+            #debug
+            some_map = build_descriptor_list(main_mission, products)
+            for el in some_map:
+                list_map2 = list(tile.descriptors)
+                print (str(el))
+            #end-debug
 
-        for (mission, mission_tiles) in mission_products.iteritems():
+        for (mission, mission_tiles) in mission_products.items():
             if mission != main_mission:
-                for (tile_id, products) in mission_tiles.iteritems():
+                for (tile_id, products) in mission_tiles.items():
                     raster = get_reference_raster(products[0])
                     (_, tile_footprint_wgs84, _) = get_raster_footprint(raster)
 
@@ -763,7 +795,7 @@ class ProcessorBase(object):
 
         print("Tiles:", len(self.tiles))
         for tile in self.tiles:
-            print(tile.id, len(tile.descriptors))
+            print(tile.id, len(list(tile.descriptors)))
 
         self.single_stratum = self.args.strata is None
         print("Single stratum:", self.single_stratum)

@@ -13,9 +13,10 @@
 
  =========================================================================*/
  
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string/predicate.hpp>
+//#include <boost/filesystem.hpp>
+#include "boost/filesystem.hpp"
+#include "boost/algorithm/string.hpp"
 
 #include "MetadataUtil.hpp"
 #include "MACCSMetadataReader.hpp"
@@ -25,30 +26,39 @@ std::string getRasterFile(const MACCSFileMetadata &metadata, const char *suffix)
 {
     std::string file;
 
+    ///*
     for (const auto &fileInfo : metadata.ProductOrganization.ImageFiles) {
         if (boost::algorithm::ends_with(fileInfo.LogicalName, suffix)) {
             
+            //file = _GetPath__(metadata.ProductPath) + "/" + fileInfo.FileLocation;
+            //file = _RemoveExtension__(file) + ".DBL.TIF";
+            ///*
             boost::filesystem::path p(metadata.ProductPath);
             p.remove_filename();
+
             p /= fileInfo.FileLocation;
             p.replace_extension(".DBL.TIF");
             file = p.string();
+            //*/
             break;
         }
 
     }
+    //*/
 
     return file;
 }
 
 std::string getRasterFile(const SPOT4Metadata &metadata, const std::string &file)
 {
+    ///*
     boost::filesystem::path p(metadata.ProductPath);
     p.remove_filename();
     p /= file;
     return p.string();
-  
-}
+ //*/
+    //return _GetPath__(metadata.ProductPath) + "/" + file;
+ }
 
 std::string getMainRasterFile(const MACCSFileMetadata &metadata)
 {
@@ -282,13 +292,20 @@ std::string ExtractDateFromDateTime(std::string dateTime) {
 std::string GetLogicalFileName(std::string filePath, bool withExtension)
 {
 
-   
+    //return withExtension ? _RemovePath__(filePath) :
+    //    _RemovePath__(_RemoveExtension__(filePath));
+
+
+    ///*
+
    // Create a Path object from File Path
    boost::filesystem::path pathObj(filePath);
 
    // Check if file name is required without extension
+
    if(withExtension == false)
    {
+       //return _RemovePath__(_RemoveExtension__(filePath));
        // Check if file has stem i.e. filename without extension
        if(pathObj.has_stem())
        {
@@ -300,6 +317,8 @@ std::string GetLogicalFileName(std::string filePath, bool withExtension)
    else
    {
        // return the file name with extension from path object
+       
        return pathObj.filename().string();
    }
+    //*/
 }

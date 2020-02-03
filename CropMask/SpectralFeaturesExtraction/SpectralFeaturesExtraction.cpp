@@ -486,7 +486,8 @@ private:
         m_Preprocessor->SetPixelSize(pixSize);
         m_Preprocessor->SetMission(mission);
         if (IsParameterEnabled("rededge")) {
-            m_Preprocessor->SetIncludeRedEdge(true);
+            //m_Preprocessor->SetIncludeRedEdge(true);
+            m_Preprocessor->SetIncludeRedEdge(GetParameterAsString("rededge") == "true");
         }
         m_Preprocessor->SetLambda(lambda);
 

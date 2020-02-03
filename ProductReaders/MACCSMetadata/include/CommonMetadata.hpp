@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+
 struct CommonFileInformation
 {
     std::string Nature;

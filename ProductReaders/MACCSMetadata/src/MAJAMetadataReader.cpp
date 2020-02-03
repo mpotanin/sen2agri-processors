@@ -15,8 +15,10 @@
  
 #include <limits>
 
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem.hpp>
+//#include <boost/algorithm/string/predicate.hpp>
+//#include <boost/filesystem.hpp>
+//#include "boost/filesystem.hpp"
+#include "boost/algorithm/string/predicate.hpp"
 
 #include "otbMacro.h"
 

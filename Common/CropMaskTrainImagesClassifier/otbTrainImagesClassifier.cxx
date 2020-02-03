@@ -295,7 +295,8 @@ void CropMaskTrainImagesClassifier::DoExecute()
       preprocessor->SetMission(mission);
 
       if (IsParameterEnabled("rededge")) {
-          preprocessor->SetIncludeRedEdge(true);
+          //preprocessor->SetIncludeRedEdge(true);
+          preprocessor->SetIncludeRedEdge(GetParameterAsString("rededge") == "true");
       }
 
       preprocessor->SetBM(false);

@@ -271,10 +271,9 @@ private:
           mission = this->GetParameterString("mission");
       }
 
-      //auto bm = GetParameterEmpty("bm");
-      bool bm = IsParameterEnabled("bm");
+   
       
-      auto window = GetParameterInt("window");
+      auto window = GetParameterInt("window"); 
 
       TileData td;
       m_Rescalers = RescalerListType::New();
@@ -282,14 +281,23 @@ private:
       m_Preprocessor = CropMaskPreprocessing::New();
       m_Preprocessor->SetPixelSize(pixSize);
       m_Preprocessor->SetMission(mission);
-      //if (GetParameterEmpty("rededge")) {
+      
+      //substitute for GetParameterEmpty("rededge")
       if (IsParameterEnabled("rededge")) {
-//AAAAAAA
-std::cout<<"rededge=true"<<std::endl;
-          m_Preprocessor->SetIncludeRedEdge(true);
+         //std::cout << "REDEDGE: "<<GetParameterAsString("rededge") << std::endl;
+         m_Preprocessor->SetIncludeRedEdge(GetParameterAsString("rededge") == "true");
       }
 
-      m_Preprocessor->SetBM(bm);
+      //auto bm = GetParameterEmpty("bm");
+      //m_Preprocessor->SetBM(bm);
+      //substitute for GetParameterEmpty("bm")
+      if (IsParameterEnabled("bm"))
+      {
+          //std::cout << "BM: " << GetParameterAsString("bm") << std::endl;
+          m_Preprocessor->SetBM(GetParameterAsString("bm") == "true");
+      }
+
+
       m_Preprocessor->SetW(window);
       m_Preprocessor->SetDelta(0.05f);
       m_Preprocessor->SetTSoil(0.2f);

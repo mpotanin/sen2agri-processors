@@ -15,8 +15,10 @@
  
 #include <limits>
 
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem.hpp>
+//#include <boost/algorithm/string/predicate.hpp>
+//#include <boost/filesystem.hpp>
+#include "boost/algorithm/string/predicate.hpp"
+#include "boost/filesystem.hpp"
 
 #include "otbMacro.h"
 
@@ -578,6 +580,7 @@ static void FixProductOrganization(CommonProductOrganization &po)
         return false;
     };
 
+  
     for (const auto &file : po.ImageFiles) {
         if (compareSuffix(file.LogicalName, "_SRE", foundSRE, name) ||
             compareSuffix(file.LogicalName, "_SRE_R1", foundSRE_R1, name) ||
@@ -586,12 +589,21 @@ static void FixProductOrganization(CommonProductOrganization &po)
             compareSuffix(file.LogicalName, "_FRE_R1", foundFRE_R1, name) ||
             compareSuffix(file.LogicalName, "_FRE_R2", foundFRE_R2, name)) {
             if (dir.empty()) {
+                //dir = _GetPath__(file.FileLocation);
+                ///*
                 boost::filesystem::path p(file.FileLocation);
                 p.remove_filename();
+#if defined(WIN32) || defined(_WIN32) || defined(_WINDOWS)
+                dir = _wstrToUtf8__(p.native());
+#else
                 dir = p.native();
+#endif
+//*/
             }
         }
     }
+ 
+
 
     const auto addImageFile = [&po, &dir, &name](const std::string &nature,
                                                  const std::string &suffix) {

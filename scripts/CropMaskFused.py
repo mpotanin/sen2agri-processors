@@ -192,7 +192,7 @@ class CropMaskProcessor(ProcessorBase):
             area_prodpertile = []
             for tile in stratum.tiles:
                 area_descriptors += tile.get_descriptor_paths()
-                area_prodpertile.append(len(tile.descriptors))
+                area_prodpertile.append(len(list(tile.descriptors)))
 
             run_step(Step("SampleSelectionAgri", ["otbcli_SampleSelectionAgri",
                                               "-ref", features_shapefile,
@@ -225,6 +225,7 @@ class CropMaskProcessor(ProcessorBase):
             step_args += ["-sp"] + self.args.sp
             step_args += ["-prodpertile"] + area_prodpertile
             step_args += ["-il"] + area_descriptors
+     
             if self.args.classifier == "rf":
                 step_args += ["-classifier.rf.nbtrees", self.args.rfnbtrees,
                               "-classifier.rf.min", self.args.rfmin,
@@ -387,12 +388,21 @@ class CropMaskProcessor(ProcessorBase):
 
                 os.remove(tile_spectral_features)
 
+        
+              
+        os.system('gdal_translate -of GTiff -co "COMPRESS=DEFLATE" -ot Int16 ' +
+                'C:\\work\\data\\cropmask\\39UVB_2018\\workdir\\crop_mask_map_39UVB_uncompressed.tif ' 
+                + 'C:\\work\\data\\cropmask\\39UVB_2018\\workdir\\crop_mask_map_39UVB.tif')
+
+        """
         tile_crop_mask_map = self.get_tile_classification_output(tile)
         step_args = ["otbcli_Convert",
                      "-progress", "false",
                      "-in", tile_crop_mask_uncompressed,
                      "-out", format_otb_filename(tile_crop_mask_map, compression='DEFLATE'), "int16"]
-        run_step(Step("Compression_{}".format(tile.id), step_args))
+                     run_step(Step("Compression_{}".format(tile.id), step_args))
+        """
+        
 
         if not self.args.keepfiles:
             os.remove(tile_crop_mask_uncompressed)

@@ -17,8 +17,9 @@
 #include <time.h>
 #include <ctime>
 #include <cmath>
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string/predicate.hpp>
+#include "boost/filesystem.hpp"
+#include "boost/algorithm/string/predicate.hpp"
+
 
 
 template<typename PixelType, typename MasksPixelType>
@@ -37,10 +38,18 @@ bool MetadataHelper<PixelType, MasksPixelType>::LoadMetadataFile(const std::stri
 {
     Reset();
     m_inputMetadataFileName = file;
+    //m_DirName = _GetPath__(m_inputMetadataFileName);
 
+    ///*
     boost::filesystem::path p(m_inputMetadataFileName);
     p.remove_filename();
+
+#if defined(WIN32) || defined(_WIN32) || defined(_WINDOWS)
+    m_DirName = _wstrToUtf8__(p.native());
+#else
     m_DirName = p.native();
+#endif
+//*/
     return DoLoadMetadata(file);
 }
 
@@ -56,6 +65,24 @@ void MetadataHelper<PixelType, MasksPixelType>::Reset()
     m_bHasDetailedAngles = false;
 }
 
+#if defined(WIN32) || defined(_WIN32) || defined(_WINDOWS)
+template<typename PixelType, typename MasksPixelType>
+int MetadataHelper<PixelType, MasksPixelType>::GetAcquisitionDateAsDoy()
+{
+    int nYear = atoi(m_AcquisitionDate.substr(0, 4).c_str());
+    int nMonth = atoi(m_AcquisitionDate.substr(4, 2).c_str());
+    int nDay = atoi(m_AcquisitionDate.substr(6, 2).c_str());
+    int nDaysInMonth[] = { 31,nYear%4==0 ? 29 : 28,31,30,31,30,31,31,30,31,30,31 };
+    int nDoy = 0;
+    for (int i = 0; i < nMonth-1; i++)
+    {
+        nDoy += nDaysInMonth[i];
+    }
+
+    return (nDoy+=nDay);
+
+}
+#else
 template<typename PixelType, typename MasksPixelType>
 int MetadataHelper<PixelType, MasksPixelType>::GetAcquisitionDateAsDoy()
 {
@@ -75,6 +102,7 @@ int MetadataHelper<PixelType, MasksPixelType>::GetAcquisitionDateAsDoy()
 
     return lrintf(diff / 86400 /* 60*60*24*/);
 }
+#endif
 
 template<typename PixelType, typename MasksPixelType>
 MeanAngles_Type MetadataHelper<PixelType, MasksPixelType>::GetSensorMeanAngles() {
@@ -161,9 +189,12 @@ bool MetadataHelper<PixelType, MasksPixelType>::GetTrueColourBandNames(std::stri
 template<typename PixelType, typename MasksPixelType>
 std::string MetadataHelper<PixelType, MasksPixelType>::buildFullPath(const std::string& fileName)
 {
+    return m_DirName + "/" + fileName;
+    /*
     boost::filesystem::path p(m_DirName);
     p /= fileName;
     return p.string();
+    */
 }
 
 
