@@ -760,6 +760,7 @@ class ProcessorBase(object):
 
             tile = Tile(tile_id, tile_footprint, tile_footprint_wgs84,
                         tile_projection, build_descriptor_list(main_mission, products), raster)
+<<<<<<< Updated upstream
 
             #debug
             list_map4 = list(tile.descriptors)
@@ -767,6 +768,8 @@ class ProcessorBase(object):
            
             #end-debug
 
+=======
+>>>>>>> Stashed changes
             if self.args.tile_filter is None or tile_id in self.args.tile_filter:
                 self.tiles.append(tile)
             #debug
