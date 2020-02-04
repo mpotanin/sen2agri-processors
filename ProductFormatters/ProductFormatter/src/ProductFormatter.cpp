@@ -1886,7 +1886,7 @@ private:
 #if defined(WIN32) || defined(_WIN32) || defined(_WINDOWS)
 //              std::string fileName = _wstrToUtf8__(entry.path().filename().c_str());
 #else
-              std::string fileName = entry.path().filename().c_str();
+ //             std::string fileName = entry.path().filename().c_str();
 #endif
  //             CopyFile(m_strDestRoot + "/" + m_strProductDirectoryName + "/" + VECTOR_FOLDER_NAME + "/" + fileName, file);
           }
