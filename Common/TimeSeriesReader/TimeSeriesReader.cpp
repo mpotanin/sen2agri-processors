@@ -14,7 +14,7 @@ int getDaysFromEpoch(const std::string &date)
     int days = timegm(&pt_tm) / 86400;
     return days;
 }
-#elif
+#else
 int getDaysFromEpoch(const std::string& date)
 {
     struct tm tm = {};
