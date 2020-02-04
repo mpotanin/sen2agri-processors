@@ -760,33 +760,12 @@ class ProcessorBase(object):
 
             tile = Tile(tile_id, tile_footprint, tile_footprint_wgs84,
                         tile_projection, build_descriptor_list(main_mission, products), raster)
-<<<<<<< Updated upstream
-
-            #debug
-            list_map4 = list(tile.descriptors)
-            #list_map = list(build_descriptor_list(main_mission, products))
            
-            #end-debug
 
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
-=======
-            #debug
-            list_map4 = list(tile.descriptors)
-            #list_map = list(build_descriptor_list(main_mission, products))
-           
-            #end-debug
 
->>>>>>> 08c663a... first run with OTB 7.0 done
             if self.args.tile_filter is None or tile_id in self.args.tile_filter:
                 self.tiles.append(tile)
-            #debug
-            some_map = build_descriptor_list(main_mission, products)
-            for el in some_map:
-                list_map2 = list(tile.descriptors)
-                print (str(el))
-            #end-debug
+    
 
         for (mission, mission_tiles) in mission_products.items():
             if mission != main_mission:
