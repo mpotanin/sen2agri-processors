@@ -348,7 +348,7 @@ class CropMaskProcessor(ProcessorBase):
 
         if self.args.refp is not None:
             step_args = ["otbcli_CropMaskImageClassifier",
-                         "-progress", "false",
+                         "-progress", "true",
                          "-mission", self.args.mission.name,
                          "-pixsize", self.args.pixsize,
                          "-bv", -10000,
