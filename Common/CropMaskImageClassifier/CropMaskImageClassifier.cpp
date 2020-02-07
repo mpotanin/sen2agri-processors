@@ -392,6 +392,7 @@ private:
      for (size_t i = 0; i < m_Models->Size(); i++)
        {
        const auto &sensorOutDays = readOutputDays(inDays[i]);
+
        auto output = m_Preprocessor->GetOutput(sensorOutDays);
 
        if (useStatistics)
@@ -402,7 +403,9 @@ private:
          }
        else
          {
+
          m_ClassificationFilter->PushBackInput(output);
+         
          }
        }
 
@@ -412,7 +415,6 @@ private:
         }
 
       SetParameterOutputImage<OutputImageType>("out", m_ClassificationFilter->GetOutput());
-
   }
 
   //  Software Guide :EndCodeSnippet
