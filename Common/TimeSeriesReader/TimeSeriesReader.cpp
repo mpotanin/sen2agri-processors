@@ -264,6 +264,7 @@ void TimeSeriesReader::ProcessMetadata(const std::unique_ptr<MetadataHelper<floa
 void TimeSeriesReader::GetProductBands(const std::unique_ptr<MetadataHelper<float, uint8_t>>& pHelper, const TileData& td,
                                        ImageDescriptor &descriptor) {
     // Return extract Green, Red, Nir and Swir bands image
+
     const std::vector<std::string> &bandNames1 = {pHelper->GetGreenBandName(),
                                             pHelper->GetRedBandName(),
                                             pHelper->GetNirBandName()};

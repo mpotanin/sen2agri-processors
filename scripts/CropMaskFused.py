@@ -345,7 +345,7 @@ class CropMaskProcessor(ProcessorBase):
                            "-out", format_otb_filename(tile_model_mask, compression='DEFLATE'), "uint8"]))
 
         tile_crop_mask_uncompressed = self.get_output_path("crop_mask_map_{}_uncompressed.tif", tile.id)
-
+        """
         if self.args.refp is not None:
             step_args = ["otbcli_CropMaskImageClassifier",
                          "-progress", "true",
@@ -387,12 +387,12 @@ class CropMaskProcessor(ProcessorBase):
                 tile_spectral_features = self.get_output_path("spectral-features-{}.tif", tile.id)
 
                 os.remove(tile_spectral_features)
-
+        """
         
               
         os.system('gdal_translate -of GTiff -co "COMPRESS=DEFLATE" -ot Int16 ' +
-                'C:\\work\\data\\cropmask\\39UVB_2018\\workdir\\crop_mask_map_39UVB_uncompressed.tif ' 
-                + 'C:\\work\\data\\cropmask\\39UVB_2018\\workdir\\crop_mask_map_39UVB.tif')
+                tile_crop_mask_uncompressed + ' ' +
+                self.get_tile_classification_output(tile))
 
         """
         tile_crop_mask_map = self.get_tile_classification_output(tile)
