@@ -345,7 +345,6 @@ class CropMaskProcessor(ProcessorBase):
                            "-out", format_otb_filename(tile_model_mask, compression='DEFLATE'), "uint8"]))
 
         tile_crop_mask_uncompressed = self.get_output_path("crop_mask_map_{}_uncompressed.tif", tile.id)
-        """
         if self.args.refp is not None:
             step_args = ["otbcli_CropMaskImageClassifier",
                          "-progress", "true",
@@ -387,22 +386,20 @@ class CropMaskProcessor(ProcessorBase):
                 tile_spectral_features = self.get_output_path("spectral-features-{}.tif", tile.id)
 
                 os.remove(tile_spectral_features)
-        """
         
-              
+        
         os.system('gdal_translate -of GTiff -co "COMPRESS=DEFLATE" -ot Int16 ' +
                 tile_crop_mask_uncompressed + ' ' +
                 self.get_tile_classification_output(tile))
-
+       
         """
         tile_crop_mask_map = self.get_tile_classification_output(tile)
         step_args = ["otbcli_Convert",
                      "-progress", "false",
                      "-in", tile_crop_mask_uncompressed,
                      "-out", format_otb_filename(tile_crop_mask_map, compression='DEFLATE'), "int16"]
-                     run_step(Step("Compression_{}".format(tile.id), step_args))
-        """
-        
+        run_step(Step("Compression_{}".format(tile.id), step_args))
+        """        
 
         if not self.args.keepfiles:
             os.remove(tile_crop_mask_uncompressed)
