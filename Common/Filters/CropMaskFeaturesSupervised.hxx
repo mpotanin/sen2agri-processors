@@ -23,15 +23,6 @@ typedef otb::VectorImage<PixelValueType, 2>  ImageType;
 
 #define NODATA -10000
 
-//debug
-#include <chrono>
-
-long long TIME_STAMP = 0;
-long long MICRO_SECONDS_DURATION = 0;
-auto T0 = std::chrono::high_resolution_clock::now();
-
-//end-debug
-
 template <typename PixelType>
 class CropMaskFeaturesSupervisedFunctor
 {
@@ -42,10 +33,6 @@ public:
 
   PixelType operator()(const PixelType &pixel) const
   {
-      //debug
-      T0 = std::chrono::high_resolution_clock::now();
-      //end-debug
-
       int numImages = pixel.Size() / 4;
 
       // The output pixel contains 17 bands built from the ndvi series, 5 bands built from ndwi series and 5 bands built from brightness series
@@ -329,16 +316,6 @@ public:
     }
 
 
-    //debug
-
-    MICRO_SECONDS_DURATION += std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() 
-                                                                                    - T0).count();
-    if (MICRO_SECONDS_DURATION - TIME_STAMP > 1000000)
-    {
-        TIME_STAMP = MICRO_SECONDS_DURATION;
-        std::cout << TIME_STAMP / 1000000 << std::endl;
-    }
-    //end-debug
     return result;
   }
 

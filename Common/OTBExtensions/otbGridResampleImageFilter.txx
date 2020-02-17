@@ -207,6 +207,7 @@ void
 GridResampleImageFilter<TInputImage, TOutputImage, TInterpolatorPrecision>
 ::BeforeThreadedGenerateData()
 {
+
   if ( !m_Interpolator )
     {
     itkExceptionMacro(<< "Interpolator not set");
