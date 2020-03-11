@@ -66,7 +66,7 @@ def executeStep(name, *args, **kwargs):
                 cmdLine = cmdLine + " > " + pipes.quote(outf)
             
             # invoke the external process
-        
+            print (cmdLine)
             if len(outf):
                 fil = open(outf, "w")
                 result = subprocess.call(args, stdout=fil)
