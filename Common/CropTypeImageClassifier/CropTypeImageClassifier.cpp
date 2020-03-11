@@ -145,7 +145,7 @@ private:
       SetName("CropTypeImageClassifier");
       SetDescription("Build the statistics from a set of tiles");
 
-      SetDocName("CropTypeImageClassifier");
+      //SetDocName("CropTypeImageClassifier");
       SetDocLongDescription("Build the statistics from a set of tiles.");
       SetDocLimitations("None");
       SetDocAuthors("LN");
@@ -191,7 +191,7 @@ private:
     AddParameter(ParameterType_String, "mission", "The main raster series that will be used. By default SPOT is used");
     MandatoryOff("mission");
 
-    AddParameter(ParameterType_Empty, "rededge", "Include Sentinel-2 vegetation red edge bands");
+    AddParameter(ParameterType_Bool, "rededge", "Include Sentinel-2 vegetation red edge bands");
     MandatoryOff("rededge");
 
     AddParameter(ParameterType_InputFilenameList, "imstat", "Statistics file");
@@ -270,7 +270,7 @@ private:
       m_Preprocessor = CropTypePreprocessing::New();
       m_Preprocessor->SetPixelSize(pixSize);
       m_Preprocessor->SetMission(mission);
-      if (GetParameterEmpty("rededge")) {
+      if (IsParameterEnabled("rededge")) {
           m_Preprocessor->SetIncludeRedEdge(true);
       }
 

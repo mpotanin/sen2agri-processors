@@ -44,7 +44,7 @@ void CropTypeTrainImagesClassifier::DoInit()
     "Train a classifier from multiple pairs of images and training vector data.");
 
   // Documentation
-  SetDocName("Train a classifier from multiple images");
+  //SetDocName("Train a classifier from multiple images");
   SetDocLongDescription(
     "This application performs a classifier training from multiple pairs of input images and training vector data. "
     "Samples are composed of pixel values in each band optionally centered and reduced using an XML statistics file produced by "
@@ -118,7 +118,7 @@ void CropTypeTrainImagesClassifier::DoInit()
   AddParameter(ParameterType_String, "mission", "The main raster series that will be used. By default SPOT is used");
   MandatoryOff("mission");
 
-  AddParameter(ParameterType_Empty, "rededge", "Include Sentinel-2 vegetation red edge bands");
+  AddParameter(ParameterType_Bool, "rededge", "Include Sentinel-2 vegetation red edge bands");
   MandatoryOff("rededge");
 
   //LBU
@@ -145,7 +145,7 @@ void CropTypeTrainImagesClassifier::DoInit()
   SetParameterDescription("sample.bm", "Bound the number of samples for each class by the number of available samples by the smaller class. Proportions between training and validation are respected. Default is true (=1).");
 
 
-  AddParameter(ParameterType_Empty, "sample.edg", "On edge pixel inclusion");
+  AddParameter(ParameterType_Bool, "sample.edg", "On edge pixel inclusion");
   SetParameterDescription("sample.edg",
                           "Takes pixels on polygon edge into consideration when building training and validation samples.");
   MandatoryOff("sample.edg");
@@ -277,7 +277,7 @@ void CropTypeTrainImagesClassifier::DoExecute()
       preprocessor->SetPixelSize(pixSize);
       preprocessor->SetMission(mission);
 
-      if (GetParameterEmpty("rededge")) {
+      if (IsParameterEnabled("rededge")) {
           preprocessor->SetIncludeRedEdge(true);
       }
 
@@ -381,7 +381,8 @@ void CropTypeTrainImagesClassifier::DoExecute()
   for (const auto &key : booleanParams) {
       if (HasValue(key)) {
           app->EnableParameter(key);
-          app->SetParameterEmpty(key, GetParameterEmpty(key));
+          //app->SetPa
+          //app->SetParameterEmpty(key, GetParameterBool(key));
       }
   }
 
@@ -446,7 +447,7 @@ void CropTypeTrainImagesClassifier::DoExecute()
     SetParameterDescription(
         "classifier.libsvm.c",
         "SVM models have a cost parameter C (1 by default) to control the trade-off between training errors and forcing rigid margins.");
-    AddParameter(ParameterType_Empty, "classifier.libsvm.opt", "Parameters optimization");
+    AddParameter(ParameterType_Bool, "classifier.libsvm.opt", "Parameters optimization");
     MandatoryOff("classifier.libsvm.opt");
     SetParameterDescription("classifier.libsvm.opt", "SVM parameters optimization flag.");
   }
@@ -527,7 +528,7 @@ void CropTypeTrainImagesClassifier::DoExecute()
     AddParameter(ParameterType_Float, "classifier.svm.degree", "Parameter degree of a kernel function (POLY)");
     SetParameterFloat("classifier.svm.degree", 1.0);
     SetParameterDescription("classifier.svm.degree", "Parameter degree of a kernel function (POLY).");
-    AddParameter(ParameterType_Empty, "classifier.svm.opt", "Parameters optimization");
+    AddParameter(ParameterType_Bool, "classifier.svm.opt", "Parameters optimization");
     MandatoryOff("classifier.svm.opt");
     SetParameterDescription("classifier.svm.opt", "SVM parameters optimization flag.\n-If set to True, then the optimal SVM parameters will be estimated. "
                             "Parameters are considered optimal by OpenCV when the cross-validation estimate of the test set error is minimal. "
@@ -584,13 +585,13 @@ void CropTypeTrainImagesClassifier::DoExecute()
         "classifier.dt.f", "If cv_folds > 1, then it prunes a tree with K-fold cross-validation where K is equal to cv_folds.");
 
     //Use1seRule
-    AddParameter(ParameterType_Empty, "classifier.dt.r", "Set Use1seRule flag to false");
+    AddParameter(ParameterType_Bool, "classifier.dt.r", "Set Use1seRule flag to false");
     SetParameterDescription(
         "classifier.dt.r",
         "If true, then a pruning will be harsher. This will make a tree more compact and more resistant to the training data noise but a bit less accurate.");
 
     //TruncatePrunedTree
-    AddParameter(ParameterType_Empty, "classifier.dt.t", "Set TruncatePrunedTree flag to false");
+    AddParameter(ParameterType_Bool, "classifier.dt.t", "Set TruncatePrunedTree flag to false");
     SetParameterDescription("classifier.dt.t", "If true, then pruned branches are physically removed from the tree.");
 
     //Priors are not exposed.
