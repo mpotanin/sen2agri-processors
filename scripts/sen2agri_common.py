@@ -797,6 +797,9 @@ class ProcessorBase(object):
         if not os.path.exists(self.args.outdir):
             os.makedirs(self.args.outdir)
 
+        if not os.path.exists(self.args.targetfolder):
+            os.makedirs(self.args.targetfolder)
+
         self.site_footprint_wgs84 = ogr.Geometry(ogr.wkbPolygon)
         for tile in self.tiles:
             self.site_footprint_wgs84 = self.site_footprint_wgs84.Union(tile.footprint_wgs84)
