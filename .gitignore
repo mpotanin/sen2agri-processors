@@ -3132,3 +3132,11 @@ scripts/1.py
 scripts/env.txt
 
 Common/ComputeConfusionMatrixMulti/CMakeCache.txt
+
+libSen2AgriPrdMetaWriters.so
+
+otbapp_ProductFormatter.so
+
+ContinuousColorMapping/test/CMakeLists.txt
+
+Common/TrainImagesClassifierNew/CTestTestfile.cmake
