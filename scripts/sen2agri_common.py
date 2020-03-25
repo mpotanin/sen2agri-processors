@@ -325,13 +325,14 @@ def prepare_lut(data, lut):
     available_colors.sort(key=lambda e: e[0])
     palette_idx = len(available_colors)
 
-    unused_colors = default_lut_map.items()
-    unused_colors.sort(key=lambda e: e[0])
+    #unused_colors = default_lut_map.items()
+    #unused_colors.sort(key=lambda e: e[0])
+    unused_colors = sorted(default_lut_map.items(),key=lambda e: e[0])
     available_colors.extend(unused_colors)
 
-    remaining_codes = in_codes.items()
-    remaining_codes.sort(key=lambda e: e[0])
-
+    #remaining_codes = in_codes.items()
+    #remaining_codes.sort(key=lambda e: e[0])
+    remaining_codes = sorted(in_codes.items(),key=lambda e: e[0])
     for code, lc in remaining_codes:
         _, e = available_colors[palette_idx]
         palette_idx += 1
