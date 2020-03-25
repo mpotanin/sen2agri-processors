@@ -151,7 +151,7 @@ class CropTypeProcessor(ProcessorBase):
             area_descriptors += tile.get_descriptor_paths()
             area_prodpertile.append(len(tile.descriptors))
 
-        run_step(Step("SampleSelection", ["otbcli", "SampleSelection", self.args.buildfolder,
+        run_step(Step("SampleSelection", ["otbcli", "SampleSelectionAgri", self.args.buildfolder,
                                           "-ref", features_shapefile,
                                           "-ratio", self.args.ratio,
                                           "-seed", self.args.rseed,
