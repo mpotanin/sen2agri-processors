@@ -71,7 +71,7 @@ try:
                 # the number of expected bands is different
                 return_value = int(-4)
 
-except subprocess.CalledProcessError as e: #python3 support fix done
+except subprocess.CalledProcessError as e: #python3 support fix done (python2 works too)
     print ("Running ComputeImageStatistics failed: {}".format(e.output))
     return_value = int(-5)
 
