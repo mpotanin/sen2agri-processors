@@ -246,11 +246,16 @@ class CropTypeProcessor(ProcessorBase):
             os.remove(tile_model_mask)
 
         tile_crop_type_map = self.get_tile_classification_output(tile)
+
+        os.system('gdal_translate -of GTiff -co "COMPRESS=DEFLATE" -ot Int16 ' +
+                tile_crop_type_map_uncompressed + ' ' + tile_crop_type_map)
+        """
         step_args = ["otbcli_Convert",
                      "-progress", "false",
                      "-in", tile_crop_type_map_uncompressed,
                      "-out", format_otb_filename(tile_crop_type_map, compression='DEFLATE'), "int16"]
         run_step(Step("Compression_{}".format(tile.id), step_args))
+        """
 
         if not self.args.keepfiles:
             os.remove(tile_crop_type_map_uncompressed)
