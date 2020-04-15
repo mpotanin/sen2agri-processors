@@ -13,6 +13,7 @@
 
  =========================================================================*/
 
+#define USE_DEPRECATED_SRS_WKT_WGS84
 #define BOOST_NO_CXX11_SCOPED_ENUMS
 #include "boost/filesystem.hpp"
 #include "boost/algorithm/string/predicate.hpp"
