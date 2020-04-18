@@ -71,7 +71,12 @@ def executeStep(name, *args, **kwargs):
                 fil = open(outf, "w")
                 result = subprocess.call(args, stdout=fil)
             else:
+                #debug
+                for arg in args:
+                    print(str(arg))
                 result = subprocess.call(args)
+                print("AFTER")
+                #end-debug
 
             # Get the end time
         
