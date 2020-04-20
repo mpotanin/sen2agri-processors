@@ -3140,3 +3140,11 @@ otbapp_ProductFormatter.so
 ContinuousColorMapping/test/CMakeLists.txt
 
 Common/TrainImagesClassifierNew/CTestTestfile.cmake
+
+Common/TrainImagesClassifierNew/Makefile
+
+otbapp_ContinuousColorMapping.so
+
+otbapp_CropTypeImageClassifier.so
+
+otbapp_CropTypeTrainImagesClassifier.so
