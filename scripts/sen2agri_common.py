@@ -67,17 +67,18 @@ def executeStep(name, *args, **kwargs):
             
             # invoke the external process
             print (cmdLine)
+            result = os.system(cmdLine)
+            """
             if len(outf):
                 fil = open(outf, "w")
                 result = subprocess.call(args, stdout=fil)
             else:
                 #debug
-                for arg in args:
-                    print(str(arg))
-                result = subprocess.call(args)
-                print("AFTER")
+                result = os.system(cmdLine)
+                #result = subprocess.call(args)
+                #print("AFTER")
                 #end-debug
-
+            """
             # Get the end time
         
         endTime = datetime.datetime.now()
