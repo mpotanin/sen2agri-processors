@@ -49,9 +49,11 @@ try:
         output = subprocess.check_output([get_otb_launcher(), "ComputeImagesStatistics",
                                           "-progress", "false",
                                           "-il", args.input])
-
-        mean = re.search(r"\(INFO\) Mean: \[([\w., -]+)\]", output)
-        deviation = re.search(r"\(INFO\) Standard Deviation: \[([\w., ]+)\]", output)
+        #fix to support python3
+        #mean = re.search(r"\(INFO\) Mean: \[([\w., -]+)\]", output)
+        #deviation = re.search(r"\(INFO\) Standard Deviation: \[([\w., ]+)\]", output)
+        mean = re.search(rb"\(INFO\) Mean: \[([\w., -]+)\]", output)
+        deviation = re.search(rb"\(INFO\) Standard Deviation: \[([\w., ]+)\]", output)
         if mean is not None and deviation is not None:
             print(output)
             mean_values = mean.group(1).strip(" \n\r\t").split(",")

@@ -421,6 +421,10 @@ def collect_image_resolution_name(fullFileName):
 
     return tuple_entry
 #----------------------------------------------------------------
+#fix to sypport python3
+def cmp(a, b):
+    return (a > b) - (a < b) 
+
 def resolution_mismatch_found(filesList):
    isMismatch = False
    for a, b in itertools.combinations(filesList, 2):
@@ -471,7 +475,9 @@ def perform_images_concatenation(listOfFiles, dataFolder, keepBsStatusInd):
 
    #create a list of tupples to store files upon scale resolution: 10,20,..
    list_img_by_scale = list()
-   for key, fileList in tmp_data_dictionary.iteritems():
+   #for key, fileList in tmp_data_dictionary.iteritems():
+   #fix to support python3
+   for key, fileList in tmp_data_dictionary.items():
       if key:
          if ("_") in key:
             #split key upon "_" (the key is "bisofericalStatusIndicator"_"scaleProjection" -> key: SLAIR_20)
@@ -829,9 +835,13 @@ def granule_img_build_dict(listOfInitialInputFiles):
       #build dict as d["Folder_tile_1"]=["file1, "file2"], d["Folder_tile_2"]=["file2, "file3"]
 
    #convert dict to list
-   result = granule_dict.items()
+   
+   #fix to support python3
+   #result = granule_dict.items()
    #converted list obtained[("Folder_tile_1", ["file1, "file2"]), ("Folder_tile_2", ["file3, "file4"])]
-   result.sort()
+   #result.sort()
+   result = sorted(granule_dict.items())
+   
    #sort again to have list of files sorted
    for directory in result:
       directory[1].sort()
@@ -846,10 +856,12 @@ def getMajorityWGS_PROJCS(listFiles):
       dataset = gdal.Open(itemFullPath, gdal.gdalconst.GA_ReadOnly)
       source_srs = osr.SpatialReference()
       source_srs.ImportFromWkt(dataset.GetProjection())
-
       proj_CS_dict[source_srs.ExportToWkt()] += 1
 
-   max_srs_wkt = max(proj_CS_dict.iteritems(), key=operator.itemgetter(1))[0]
+   #fix to support python3
+   #max_srs_wkt = max(proj_CS_dict.iteritems(), key=operator.itemgetter(1))[0]
+   max_srs_wkt = max(proj_CS_dict.items(), key=operator.itemgetter(1))[0]
+   
    same_srs = len(proj_CS_dict) == 1
 
    srs = osr.SpatialReference()
