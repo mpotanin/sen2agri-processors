@@ -52,6 +52,16 @@ def executeStep(name, *args, **kwargs):
         # Print start message
         print("Executing " + name + " at " + str(startTime))
 
+        
+        if len(outf):
+            fil = open(outf, "w")
+            result = subprocess.call(args, stdout=fil)
+        else:
+            result = subprocess.call(args)
+            
+        
+
+        """
         args = map(str, args)
         
         if platform.system().lower() == 'windows':
@@ -68,17 +78,7 @@ def executeStep(name, *args, **kwargs):
             # invoke the external process
             print (cmdLine)
             result = os.system(cmdLine)
-            """
-            if len(outf):
-                fil = open(outf, "w")
-                result = subprocess.call(args, stdout=fil)
-            else:
-                #debug
-                result = os.system(cmdLine)
-                #result = subprocess.call(args)
-                #print("AFTER")
-                #end-debug
-            """
+        """
             # Get the end time
         
         endTime = datetime.datetime.now()
