@@ -53,6 +53,7 @@ def executeStep(name, *args, **kwargs):
         print("Executing " + name + " at " + str(startTime))
 
         args_str = [str(el) for el in args]
+        print(" ".join(args_str))
         if len(outf):
             fil = open(outf, "w")
             result = subprocess.call(args_str, stdout=fil)
